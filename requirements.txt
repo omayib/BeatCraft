@@ -1,0 +1,9 @@
+click
+MIDIUtil
+pyo
+pygame
+numpy
+sounddevice
+mido
+python-rtmidi
+pretty_midi

@@ -220,4 +220,22 @@ def main(num_bars: int, num_notes: int, num_steps: int, pauses: bool, key: str, 
 
 if __name__ == '__main__':
     print(f"list devices {pa_list_devices()}")
-    main()
+    # main()
+    s = Server()
+    s.setOutputDevice(7)
+    s.boot()
+    # Start the server
+    s.start()
+
+    # Set the tempo (beats per minute)
+    bpm = 120
+
+    # Calculate the interval in seconds
+    interval = 60.0 / bpm
+
+    # Generate a simple click sound (sine wave burst) for the metronome
+    metronome = Metro(time=interval).play()
+    click = TrigFunc(metronome, lambda: Sine(freq=880, mul=0.3).out())
+
+    # Keep the metronome running
+    s.gui(locals())
