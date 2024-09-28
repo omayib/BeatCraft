@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13fac740-f029-4bcd-835e-be7d40a4e607" name="Changes" comment="build a sdk">
-      <change afterPath="$PROJECT_DIR$/algorithms/melody_genetic.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/algorithms/note_duration_generator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/algorithms/scale_generator.py" afterDir="false" />
+    <list default="true" id="13fac740-f029-4bcd-835e-be7d40a4e607" name="Changes" comment="buld genetic algorithm">
+      <change afterPath="$PROJECT_DIR$/beat_craft_sdk/craft_strategy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beat_craft_sdk/crafting_with_genetic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/metronome.py" beforeDir="false" afterPath="$PROJECT_DIR$/metronome.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithms/melody_genetic.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/melody_genetic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithms/note_duration_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/note_duration_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithms/scale_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/scale_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beat_craft_sdk/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/beat_craft_sdk/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_core.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +27,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -62,12 +70,12 @@
     "Python.note_duration_generator.executor": "Run",
     "Python.scale_generator.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "feature/withgenetic",
     "last_opened_file_path": "/home/user/Workspace/BeatCraft/mgen.py",
     "two.files.diff.last.used.file": "/home/user/Workspace/BeatCraft/mgen.py"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python tests.Python tests for test_core.TestBeatCraftSdk.test_sdk_with_config">
     <configuration name="mgen" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="BeatCraft" />
       <option name="ENV_FILES" value="" />
@@ -192,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727487846647</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="buld genetic algorithm">
+      <option name="closed" value="true" />
+      <created>1727492821464</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1727492821465</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -209,6 +225,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="master" />
     <MESSAGE value="build a sdk" />
-    <option name="LAST_COMMIT_MESSAGE" value="build a sdk" />
+    <MESSAGE value="buld genetic algorithm" />
+    <option name="LAST_COMMIT_MESSAGE" value="buld genetic algorithm" />
   </component>
 </project>

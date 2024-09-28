@@ -1,16 +1,15 @@
 from algorithms.note_duration_generator import note_durations
-from note_duration_generator import genetic_algorithm
-from scale_generator import scale_genetic_algorithm
+from note_duration_generator import generate_note_duration_with_genetic_algorithm
+from scale_generator import generate_scale_with_genetic_algorithm
 import mido
 from mido import MidiFile, MidiTrack, Message
-import pygame
 
-solution = genetic_algorithm()
+solution = generate_note_duration_with_genetic_algorithm()
 flattened_list = [item for sublist in solution for item in (sublist if isinstance(sublist, list) else [sublist])]
 print(f"flattened list {flattened_list}")
 
 numberitem = len(flattened_list)
-best_sequence = scale_genetic_algorithm(numberitem)
+best_sequence = generate_scale_with_genetic_algorithm(numberitem)
 print(f"best_sequence list {best_sequence}")
 
 paired_notes = list(zip(flattened_list,best_sequence))

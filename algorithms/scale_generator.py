@@ -48,7 +48,7 @@ def mutate(sequence, mutation_rate=0.1):
 
 
 # Main genetic algorithm
-def scale_genetic_algorithm(num_item=4):
+def generate_scale_with_genetic_algorithm(num_item=4):
     population = initialize_population(population_size, num_item)
 
     for generation in range(num_generations):

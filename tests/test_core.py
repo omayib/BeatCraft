@@ -14,8 +14,7 @@ class TestBeatCraftSdk(unittest.TestCase):
     def test_sdk_with_config(self):
         config = Config(tempo="fast",vibe="calm")
         sdk = BeatCraft(config)
-        sdk.generate_music()
-        self.assertEqual(sdk.get_vibe(),"calm")
-        self.assertEqual(sdk.get_tempo(),"fast")
+        notes = sdk.generate_music()
+        self.assertGreater(len(notes),0,"list of notes are empty")
 if __name__ == '__main__':
     unittest.main()

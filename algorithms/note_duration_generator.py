@@ -92,7 +92,7 @@ def mutation(individual):
 
 
 # Genetic Algorithm function
-def genetic_algorithm(generations=1000, population_size=50):
+def generate_note_duration_with_genetic_algorithm(generations=1000, population_size=50):
     population = [create_individual() for _ in range(population_size)]
 
     for generation in range(generations):
