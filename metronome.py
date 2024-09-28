@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 # Metronome parameters
-bpm = 120  # Beats per minute
+bpm = 180  # Beats per minute
 interval = 60.0 / bpm  # Seconds per beat
 
 # "Cradle Song" melody in C major with note lengths
