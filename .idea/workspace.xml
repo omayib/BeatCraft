@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13fac740-f029-4bcd-835e-be7d40a4e607" name="Changes" comment="create spectogram etc for evaluation">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_core.py" afterDir="false" />
-    </list>
+    <list default="true" id="13fac740-f029-4bcd-835e-be7d40a4e607" name="Changes" comment="create spectogram etc for evaluation" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +69,7 @@
     "Python.scale_generator.executor": "Run",
     "Python.transformer.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/evaluation",
+    "git-widget-placeholder": "develop",
     "last_opened_file_path": "/home/user/Workspace/BeatCraft/assets",
     "two.files.diff.last.used.file": "/home/user/Workspace/BeatCraft/mgen.py"
   }
