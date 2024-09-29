@@ -6,7 +6,7 @@ from evaluation.beat_craft_evaluation import fitness_smoothness, population_dive
 A_minor_scale_midi = [0, 57, 59, 60, 62, 64, 65, 67]  # A, B, C, D, E, F, G
 
 # User input for series length and population size
-series_length = 0
+series_length = 4
 population_size = 100
 num_generations = 500
 

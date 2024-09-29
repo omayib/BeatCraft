@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="13fac740-f029-4bcd-835e-be7d40a4e607" name="Changes" comment="setup default genetic algorithm for generate pairs of note and duration">
-      <change afterPath="$PROJECT_DIR$/evaluation/beat_craft_evaluation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/beat_craft_utils.py" afterDir="false" />
+    <list default="true" id="13fac740-f029-4bcd-835e-be7d40a4e607" name="Changes" comment="create spectogram etc for evaluation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/algorithms/scale_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/scale_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beat_craft_sdk/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/beat_craft_sdk/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beat_craft_sdk/craft_strategy.py" beforeDir="false" afterPath="$PROJECT_DIR$/beat_craft_sdk/craft_strategy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beat_craft_sdk/crafting_with_genetic.py" beforeDir="false" afterPath="$PROJECT_DIR$/beat_craft_sdk/crafting_with_genetic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_core.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,9 +54,11 @@
     "Python tests.Python tests for test_config.TestConfig.test_default_config.executor": "Run",
     "Python tests.Python tests for test_core.TestBeatCraftSdk.executor": "Run",
     "Python tests.Python tests for test_core.TestBeatCraftSdk.test_convert_midi_to_wav.executor": "Run",
+    "Python tests.Python tests for test_core.TestBeatCraftSdk.test_generate_melody_with_config.executor": "Run",
     "Python tests.Python tests for test_core.TestBeatCraftSdk.test_generate_rythm.executor": "Run",
     "Python tests.Python tests for test_core.TestBeatCraftSdk.test_generate_with_config.executor": "Run",
     "Python tests.Python tests for test_core.TestBeatCraftSdk.test_sdk_play_generated.executor": "Run",
+    "Python tests.Python tests for test_core.TestBeatCraftSdk.test_sdk_play_midi_generated.executor": "Run",
     "Python tests.Python tests for test_core.TestBeatCraftSdk.test_sdk_with_config.executor": "Run",
     "Python tests.Python tests in test_config.py.executor": "Run",
     "Python tests.Python tests in test_core.py.executor": "Run",
@@ -90,7 +85,7 @@
       <recent name="$PROJECT_DIR$/.output" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for test_core.TestBeatCraftSdk.test_generate_rythm">
+  <component name="RunManager" selected="Python tests.Python tests for test_core.TestBeatCraftSdk.test_sdk_play_midi_generated">
     <configuration name="Python tests for test_core.TestBeatCraftSdk.test_convert_midi_to_wav" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="BeatCraft" />
       <option name="ENV_FILES" value="" />
@@ -103,6 +98,21 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_core.TestBeatCraftSdk.test_convert_midi_to_wav&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_core.TestBeatCraftSdk.test_generate_melody_with_config" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="BeatCraft" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_core.TestBeatCraftSdk.test_generate_melody_with_config&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -121,7 +131,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_core.TestBeatCraftSdk.test_generate_with_config" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_core.TestBeatCraftSdk.test_sdk_play_midi_generated" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="BeatCraft" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -132,11 +142,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_core.TestBeatCraftSdk.test_generate_with_config&quot;" />
+      <option name="_new_target" value="&quot;test_core.TestBeatCraftSdk.test_sdk_play_midi_generated&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_core.TestBeatCraftSdk.test_sdk_play_generated" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for tests.test_core.TestBeatCraftSdk.test_sdk_play_midi_generated" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="BeatCraft" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -147,32 +157,17 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_core.TestBeatCraftSdk.test_sdk_play_generated&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_core.TestBeatCraftSdk.test_sdk_with_config" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="BeatCraft" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_core.TestBeatCraftSdk.test_sdk_with_config&quot;" />
+      <option name="_new_target" value="&quot;tests.test_core.TestBeatCraftSdk.test_sdk_play_midi_generated&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests for test_core.TestBeatCraftSdk.test_sdk_play_midi_generated" />
+        <item itemvalue="Python tests.Python tests for test_core.TestBeatCraftSdk.test_generate_melody_with_config" />
         <item itemvalue="Python tests.Python tests for test_core.TestBeatCraftSdk.test_generate_rythm" />
         <item itemvalue="Python tests.Python tests for test_core.TestBeatCraftSdk.test_convert_midi_to_wav" />
-        <item itemvalue="Python tests.Python tests for test_core.TestBeatCraftSdk.test_sdk_play_generated" />
-        <item itemvalue="Python tests.Python tests for test_core.TestBeatCraftSdk.test_generate_with_config" />
-        <item itemvalue="Python tests.Python tests for test_core.TestBeatCraftSdk.test_sdk_with_config" />
+        <item itemvalue="Python tests.Python tests for tests.test_core.TestBeatCraftSdk.test_sdk_play_midi_generated" />
       </list>
     </recent_temporary>
   </component>
@@ -224,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727603358155</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="create spectogram etc for evaluation">
+      <option name="closed" value="true" />
+      <created>1727629950089</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1727629950089</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -243,6 +246,7 @@
     <MESSAGE value="build a sdk" />
     <MESSAGE value="buld genetic algorithm" />
     <MESSAGE value="play generated melody and generate rythm" />
-    <option name="LAST_COMMIT_MESSAGE" value="play generated melody and generate rythm" />
+    <MESSAGE value="create spectogram etc for evaluation" />
+    <option name="LAST_COMMIT_MESSAGE" value="create spectogram etc for evaluation" />
   </component>
 </project>
