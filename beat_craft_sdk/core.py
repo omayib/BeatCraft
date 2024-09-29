@@ -8,6 +8,11 @@ import torchaudio
 from audiocraft.models import MusicGen
 from audiocraft.data.audio import audio_write
 
+from evaluation.beat_craft_evaluation import plot_mel_spectrogram, plot_waveform, plot_spectrogram, plot_pitch_contour, \
+    load_audio_file
+from utils.beat_craft_utils import get_current_time
+
+
 class BeatCraft:
     def __init__(self, config=None, strategy=CraftingGenetic):
         self.config = config if config else Config()
@@ -20,6 +25,7 @@ class BeatCraft:
 
     def generate_melody(self):
         notes = self.strategy.generate(self)
+        self.strategy.evaluate(self)
         print(f"notes in core generate music {notes}")
         return notes
 
@@ -64,7 +70,7 @@ class BeatCraft:
         model = MusicGen.get_pretrained('melody')
         model.set_generation_params(duration=8)  # generate 8 seconds.
 
-        descriptions = ['happy rock', 'energetic EDM', 'sad jazz']
+        descriptions = ['high-energy electronic with fast beats', 'energetic and bouncy with fast rhythm','fun and quirky with upbeat chimes']
 
         melody, sr = torchaudio.load(audio_melody_path)
         # generates using the melody from the given audio and the provided descriptions.
@@ -74,11 +80,18 @@ class BeatCraft:
         os.makedirs(output_dir, exist_ok=True)
 
         for idx, one_wav in enumerate(wav):
-            output_filename = f'{idx}'
+            output_filename = f'{idx}_{get_current_time()}'
             # Full path where the audio will be saved
             output_path = os.path.join(output_dir, output_filename)
             # Will save under {idx}.wav, with loudness normalization at -14 db LUFS.
             audio_write(stem_name=output_path, wav=one_wav.cpu(), sample_rate=model.sample_rate, strategy="loudness")
+
+            audio_data, sample_rate = load_audio_file(f"{output_path}.wav")
+
+            plot_pitch_contour(audio_data, "../.output")
+            plot_mel_spectrogram(audio_data,model.sample_rate,"../.output")
+            plot_waveform(audio_data, model.sample_rate, "../.output")
+            plot_spectrogram(audio_data, model.sample_rate, "../.output")
 
     def greet(self,name):
         return f"Hi,{name}"

@@ -37,5 +37,7 @@ class TestBeatCraftSdk(unittest.TestCase):
         sdk = BeatCraft(config)
         sdk.generate_rythm('../.output/output.wav','../.output')
 
+    def test_genetic_fitness_over_generation(self):
+        pass
 if __name__ == '__main__':
     unittest.main()

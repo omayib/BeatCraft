@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13fac740-f029-4bcd-835e-be7d40a4e607" name="Changes" comment="setup default genetic algorithm for generate pairs of note and duration">
-      <change afterPath="$PROJECT_DIR$/algorithms/player.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/bach.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beat_craft_sdk/transformer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/audio_converter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/evaluation/beat_craft_evaluation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/beat_craft_utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algorithms/scale_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithms/scale_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/beat_craft_sdk/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/beat_craft_sdk/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beat_craft_sdk/craft_strategy.py" beforeDir="false" afterPath="$PROJECT_DIR$/beat_craft_sdk/craft_strategy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beat_craft_sdk/crafting_with_genetic.py" beforeDir="false" afterPath="$PROJECT_DIR$/beat_craft_sdk/crafting_with_genetic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_core.py" afterDir="false" />
     </list>
@@ -30,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,7 +77,7 @@
     "Python.scale_generator.executor": "Run",
     "Python.transformer.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/play-generated-melody",
+    "git-widget-placeholder": "feature/evaluation",
     "last_opened_file_path": "/home/user/Workspace/BeatCraft/assets",
     "two.files.diff.last.used.file": "/home/user/Workspace/BeatCraft/mgen.py"
   }
@@ -216,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727492821465</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="play generated melody and generate rythm">
+      <option name="closed" value="true" />
+      <created>1727603358155</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1727603358155</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -234,6 +242,7 @@
     <MESSAGE value="master" />
     <MESSAGE value="build a sdk" />
     <MESSAGE value="buld genetic algorithm" />
-    <option name="LAST_COMMIT_MESSAGE" value="buld genetic algorithm" />
+    <MESSAGE value="play generated melody and generate rythm" />
+    <option name="LAST_COMMIT_MESSAGE" value="play generated melody and generate rythm" />
   </component>
 </project>
