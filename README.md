@@ -12,10 +12,11 @@ print(sdk.greet('World'))  # Output: Hello, World!
 ```
 
 ### Define the parameter
+
 ```python
-config = Config(tempo="fast",vibe="calm")
+config = Config(tempo="fast", vibe="calm")
 sdk = BeatCraft(config)
-notes = sdk.generate_music()
+notes = sdk.generate_melody()
 ```
 The result are paired note and its duration
 ```python

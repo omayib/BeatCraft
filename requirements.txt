@@ -7,3 +7,7 @@ sounddevice
 mido
 python-rtmidi
 pretty_midi
+audiocraft
+torch==2.1.0
+midi2audio
+
