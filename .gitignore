@@ -2,3 +2,4 @@
 .idea
 .idea/workspace.xml
 .output
+*/__pycache__/*
