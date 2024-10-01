@@ -88,10 +88,10 @@ class BeatCraft:
 
             audio_data, sample_rate = load_audio_file(f"{output_path}.wav")
 
-            plot_pitch_contour(audio_data, "../.output")
-            plot_mel_spectrogram(audio_data,model.sample_rate,"../.output")
-            plot_waveform(audio_data, model.sample_rate, "../.output")
-            plot_spectrogram(audio_data, model.sample_rate, "../.output")
+            plot_pitch_contour(audio_data,sample_rate, "../.output")
+            plot_mel_spectrogram(audio_data,sample_rate,"../.output")
+            plot_waveform(audio_data, sample_rate, "../.output")
+            plot_spectrogram(audio_data, sample_rate, "../.output")
 
     def greet(self,name):
         return f"Hi,{name}"

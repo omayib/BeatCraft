@@ -1,7 +1,8 @@
 from algorithms.note_duration_generator import generate_note_duration_with_genetic_algorithm
 from algorithms.scale_generator import generate_scale_with_genetic_algorithm, num_generations
 from beat_craft_sdk.craft_strategy import CraftStrategy
-from evaluation.beat_craft_evaluation import plot_fitness_over_generations, plot_pitch_diversity_over_generation
+from evaluation.beat_craft_evaluation import plot_fitness_over_generations, plot_pitch_diversity_over_generation, \
+    plot_ga_evaluation_into_json
 
 
 class CraftingGenetic(CraftStrategy):
@@ -23,3 +24,4 @@ class CraftingGenetic(CraftStrategy):
         print(f"best_fitness_per_generations {self.pitch_fitness_per_generations}")
         plot_fitness_over_generations(num_generations, self.pitch_fitness_per_generations, "../.output")
         plot_pitch_diversity_over_generation(num_generations, self.pitch_diversity_per_generation, "../.output")
+        plot_ga_evaluation_into_json(self.pitch_diversity_per_generation,self.pitch_fitness_per_generations,"../.output")

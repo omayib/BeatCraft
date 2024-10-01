@@ -3,6 +3,7 @@ import os
 from utils.beat_craft_utils import get_current_time
 import numpy as np
 import librosa
+import json
 
 def fitness_smoothness(sequence):
     total_jump = sum(abs(sequence[i] - sequence[i + 1]) for i in range(len(sequence) - 1))
@@ -83,6 +84,13 @@ def plot_waveform(audio_data,sample_rate, output_dir):
     plt.ylabel("Amplitude")
     plt.savefig(output_path)
 
+    plot_audio_analyze_into_json(filename,
+                                 'Time',
+                                 time,
+                                 'Amplitude',
+                                 audio_data,
+                                 output_dir)
+
 def plot_spectrogram(audio_data,sample_rate, output_dir):
     validate_audio_data(audio_data)
     filename = f"spectrogram_generated_music_{get_current_time()}.png"
@@ -94,6 +102,19 @@ def plot_spectrogram(audio_data,sample_rate, output_dir):
     plt.title('Spectrogram of Generated Music')
     plt.savefig(output_path)
 
+    # Extract X data (time) from the frames
+    time = librosa.frames_to_time(np.arange(D.shape[1]), sr=sample_rate)
+
+    # Extract Y data (frequency in Hz)
+    frequencies = librosa.fft_frequencies(sr=sample_rate)
+
+    plot_audio_analyze_into_json(filename,
+                                 'Time',
+                                 time,
+                                 'Spectrogram (log)',
+                                 frequencies,
+                                 output_dir)
+
 def plot_mel_spectrogram(audio_data,sample_rate, output_dir):
     validate_audio_data(audio_data)
     filename = f"mel_spectrogram_generated_music_{get_current_time()}.png"
@@ -104,14 +125,31 @@ def plot_mel_spectrogram(audio_data,sample_rate, output_dir):
     print("Mel Spectrogram shape1:", mel_spect_db.shape)  # Should be (128, n_time_frames)
     mel_spect_db = np.squeeze(mel_spect_db)
     print("Mel Spectrogram shape2:", mel_spect_db.shape)
+
+    # Compute the Short-Time Fourier Transform (STFT)
+    stft_result = librosa.stft(audio_data)
+    D = librosa.amplitude_to_db(np.abs(stft_result), ref=np.max)
+
+    # Extract X data (time) from the frames
+    time = librosa.frames_to_time(np.arange(D.shape[1]), sr=sample_rate)
+
+    # Extract Y data (frequency in Hz)
+    frequencies = librosa.fft_frequencies(sr=sample_rate)  # For linear frequency scale
+
     # Plot the mel spectrogram
     plt.figure(figsize=(10, 6))
-    librosa.display.specshow(mel_spect_db, sr=sample_rate, x_axis='time', y_axis='mel')
+    librosa.display.specshow(D, sr=sample_rate, x_axis='time', y_axis='mel')
     plt.colorbar(format='%+2.0f dB')
     plt.title('Mel Spectrogram of Generated Music')
     plt.savefig(output_path)
+    plot_audio_analyze_into_json(filename,
+                                 'Time',
+                                 time,
+                                 'Mel',
+                                 frequencies,
+                                 output_dir)
 
-def plot_pitch_contour(audio_data, output_dir):
+def plot_pitch_contour(audio_data,sample_rate, output_dir):
     validate_audio_data(audio_data)
     filename = f"pitch_contour_generated_music_{get_current_time()}.png"
     output_path = os.path.join(output_dir, filename)
@@ -119,6 +157,7 @@ def plot_pitch_contour(audio_data, output_dir):
     harmonic, _ = librosa.effects.hpss(audio_data)
     pitch = librosa.yin(harmonic, fmin=librosa.note_to_hz('C2'), fmax=librosa.note_to_hz('C7'))
 
+    time = librosa.frames_to_time(np.arange(len(pitch)), sr=sample_rate)
     # Plot pitch contour
     plt.figure(figsize=(10, 4))
     plt.plot(pitch, label='Pitch Contour')
@@ -127,6 +166,12 @@ def plot_pitch_contour(audio_data, output_dir):
     plt.ylabel('Pitch (Hz)')
     plt.legend()
     plt.savefig(output_path)
+    plot_audio_analyze_into_json(filename,
+                                 'Time (frames)',
+                                 time,
+                                 'Pitch (Hz)',
+                                 pitch,
+                                 output_dir)
 def validate_audio_data(audio_data):
     if len(audio_data) == 0 or np.all(audio_data == 0):
         print("Error: Audio data is empty or consists of only zeros.")
@@ -144,3 +189,25 @@ def load_audio_file(file_path):
     except Exception as e:
         print(f"Error loading audio file: {e}")
         return None, None
+
+def plot_ga_evaluation_into_json(diversity_per_generation, best_fitness_per_generation,output_dir):
+    filename = f"ga_evaluation_{get_current_time()}.json"
+    output_path = os.path.join(output_dir, filename)
+    data = {
+        "diversity_per_generation": diversity_per_generation,
+        "best_fitness_per_generation": best_fitness_per_generation
+    }
+    # Save to a JSON file
+    with open(output_path, 'w') as json_file:
+        json.dump(data, json_file, indent=4)
+
+def plot_audio_analyze_into_json(file_name,x_label,x_data,y_label,y_data,output_dir):
+    filename = f"{file_name}_{get_current_time()}.json"
+    output_path = os.path.join(output_dir, filename)
+    data = {
+        f"{x_label}": json.dumps(x_data.tolist()),
+        f"{y_label}": json.dumps(y_data.tolist())
+    }
+    # Save to a JSON file
+    with open(output_path, 'w') as json_file:
+        json.dump(data, json_file, indent=4)
