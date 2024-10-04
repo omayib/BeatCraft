@@ -1,5 +1,7 @@
 import random
 
+from algorithms.backtracking import BackTracking
+
 # Define the possible note durations (in beats) in a 4/4 time signature
 note_durations = {
     "whole": 4,
@@ -93,8 +95,11 @@ def mutation(individual):
 
 # Genetic Algorithm function
 def generate_note_duration_with_genetic_algorithm(generations=1000, population_size=50):
-    population = [create_individual() for _ in range(population_size)]
-
+    population1 = [create_individual() for _ in range(population_size)]
+    backingtrack = BackTracking()
+    combinations = backingtrack.generate_combinations()
+    population = [random.choice(combinations) for _ in range(50)]
+    print(f"population {population}")
     for generation in range(generations):
         # Selection
         population = selection(population)
@@ -116,6 +121,8 @@ def generate_note_duration_with_genetic_algorithm(generations=1000, population_s
 
         # Check if we found a perfect solution
         best_individual = min(population, key=lambda x: fitness(x))
+        # print(f"fitness {best_individual} found in generation {generation + 1}")
+        # print(f"fitness {fitness(best_individual)} found in generation {generation + 1}")
         if fitness(best_individual) == 0:
             print(f"Solution found in generation {generation + 1}")
             return best_individual
