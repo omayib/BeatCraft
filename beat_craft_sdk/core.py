@@ -1,4 +1,4 @@
-from beat_craft_sdk.config import Config
+from beat_craft_sdk.config import BeatCraftConfig
 from beat_craft_sdk.crafting_with_genetic import CraftingGenetic
 import mido
 from mido import MidiFile, MidiTrack, Message
@@ -15,7 +15,7 @@ from utils.beat_craft_utils import get_current_time
 
 class BeatCraft:
     def __init__(self, config=None, strategy=CraftingGenetic):
-        self.config = config if config else Config()
+        self.config = config if config else BeatCraftConfig()
         self.tempo = self.config.tempo
         self.vibe = self.config.vibe
         self.strategy = strategy

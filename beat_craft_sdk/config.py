@@ -1,21 +1,32 @@
-class Config:
-    def __init__(self, tempo="medium",vibe="neutral"):
-        self.tempo = tempo
-        self.vibe = vibe
+import os
+
+from utils.beat_craft_utils import get_current_time
+
+
+class BeatCraftConfig:
+    def __init__(self,output_dir=None, file_name=None):
+        self.output_dir = output_dir
+        self.file_name = file_name
         self.validate_config()
-        print(f"init config tempo {self.tempo}")
 
     def validate_config(self):
-        valid_tempos = ["slow","medium","fast"]
-        valid_vibes = ["calm","neutral","stress"]
 
-        if self.tempo not in valid_tempos:
-            raise ValueError(f"Invalid tempo : {self.tempo}. Must be one of {valid_tempos}")
-        if self.vibe not in valid_vibes:
-            raise ValueError(f"Invalid vibe : {self.vibe}. Must be on if {valid_vibes}")
+        # If output_dir is None or doesn't exist, create it
+        if self.output_dir is None:
+            self.output_dir = os.path.abspath('./../.outputx')  # Using absolute path for consistency
+        elif not os.path.exists(self.output_dir):
+            os.makedirs(self.output_dir, exist_ok=True)  # Create the directory if it doesn't exist
+        if not self.file_name:
+            self.file_name = get_current_time()
+
+    def get_output_dir(self):
+        return self.output_dir
+
+    def get_file_name(self):
+        return self.file_name
 
     def __repr__(self):
-        return f"Config(tempot='{self.tempo}', vibe='{self.vibe}')"
+        return f"Config(output_dir='{self.output_dir}', file_name='{self.file_name}')"
 
     def to_dict(self):
-        return {"tempo":self.tempo, "vibe":self.vibe}
+        return {"output_dir":self.output_dir, "file_name":self.file_name}

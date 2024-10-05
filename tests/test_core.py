@@ -3,7 +3,8 @@ import unittest
 
 from numpy.distutils.command.config import config
 
-from beat_craft_sdk.core import BeatCraft, Config
+from beat_craft_sdk.config import BeatCraftConfig
+from beat_craft_sdk.core import BeatCraft
 from utils.audio_converter import AudioConverter
 
 
@@ -14,8 +15,19 @@ class TestBeatCraftSdk(unittest.TestCase):
         greeting = sdk.greet("Arul")
 
         self.assertEqual(greeting,"Hi,Arul")
+
+    def test_config_all_params_none(self):
+        conf = BeatCraftConfig()
+        self.assertEqual(conf.get_output_dir(),"./../.outputx")
+        self.assertTrue(conf.get_file_name())
+
+    def test_config_filled_all_params(self):
+        conf = BeatCraftConfig("./../.outputz","malam")
+        self.assertEqual(conf.get_output_dir(), "./../.outputz")
+        self.assertEqual(conf.get_file_name(),"malam")
+
     def test_generate_melody_with_config(self):
-        config = Config(tempo="fast",vibe="calm")
+        config = BeatCraftConfig()
         sdk = BeatCraft(config)
         notes = sdk.generate_melody()
         self.assertGreater(len(notes),0,"list of notes are empty")
@@ -24,7 +36,7 @@ class TestBeatCraftSdk(unittest.TestCase):
         self.assertTrue(os.path.exists('../.output/output.mid'))
 
     def test_sdk_play_midi_generated(self):
-        config = Config(tempo="fast",vibe="calm")
+        config = BeatCraftConfig()
         sdk = BeatCraft(config)
         sdk.play_generated_music('../.output/output.mid')
 
@@ -33,7 +45,7 @@ class TestBeatCraftSdk(unittest.TestCase):
         conv.midi_to_wav()
 
     def test_generate_rythm(self):
-        config = Config(tempo="fast",vibe="calm")
+        config = BeatCraftConfig()
         sdk = BeatCraft(config)
         sdk.generate_rythm('../.output/output.wav','../.output')
 
