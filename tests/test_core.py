@@ -1,10 +1,9 @@
 import os.path
 import unittest
 
-from numpy.distutils.command.config import config
-
 from beat_craft_sdk.config import BeatCraftConfig
 from beat_craft_sdk.core import BeatCraft
+from beat_craft_sdk.crafting_with_backingtrack import CraftingBackingTrack
 from utils.audio_converter import AudioConverter
 
 
@@ -26,7 +25,7 @@ class TestBeatCraftSdk(unittest.TestCase):
         self.assertEqual(conf.get_output_dir(), "./../.outputz")
         self.assertEqual(conf.get_file_name(),"malam")
 
-    def test_generate_melody_with_config(self):
+    def test_generate_melody_with_genetic(self):
         config = BeatCraftConfig()
         sdk = BeatCraft(config)
         notes = sdk.generate_melody()
@@ -35,19 +34,27 @@ class TestBeatCraftSdk(unittest.TestCase):
         sdk.melody_to_midi(notes)
         self.assertTrue(os.path.exists('../.output/output.mid'))
 
+    def test_generate_melody_with_backingtrack(self):
+        btconfig = BeatCraftConfig(file_name='output_bt')
+        sdk = BeatCraft(btconfig)
+        sdk.set_melody_engine(CraftingBackingTrack())
+        notes = sdk.generate_melody()
+        self.assertGreater(len(notes),0,"list of notes are empty")
+
+        sdk.melody_to_midi(notes)
+        self.assertTrue(os.path.exists('../.outputx/output_bt.mid'))
     def test_sdk_play_midi_generated(self):
         config = BeatCraftConfig()
         sdk = BeatCraft(config)
-        sdk.play_generated_music('../.output/output.mid')
+        sdk.play_generated_music('../.outputx/output_bt.mid')
 
     def test_convert_midi_to_wav(self):
-        conv = AudioConverter('../.output/output.mid','../.output/output.wav')
+        conv = AudioConverter('../.outputx/output_bt.mid','../.outputx/output_bt.wav')
         conv.midi_to_wav()
 
     def test_generate_rythm(self):
-        config = BeatCraftConfig()
-        sdk = BeatCraft(config)
-        sdk.generate_rythm('../.output/output.wav','../.output')
+        sdk = BeatCraft()
+        sdk.generate_rythm('../.outputx/output_bt.wav','../.outputx')
 
     def test_genetic_fitness_over_generation(self):
         pass

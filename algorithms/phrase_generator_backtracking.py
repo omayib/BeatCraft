@@ -24,7 +24,7 @@ class BackTracking:
 
         # If the current sum is exactly equal to max_sum, store the combination
         if current_sum == self.max_sum:
-            print(f"current sum {current_sum} - note count {note_count}")
+            # print(f"current sum {current_sum} - note count {note_count}")
             self.valid_combinations.append(current_combo)
             return
 
@@ -37,5 +37,5 @@ class BackTracking:
         return self.valid_combinations
 
 # Usage example
-generator = BackTracking()
-generator.generate_combinations()
+# generator = BackTracking()
+# generator.generate_combinations()

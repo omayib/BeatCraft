@@ -1,12 +1,12 @@
 import unittest
 
-from algorithms.backtracking import BackTracking
-from algorithms.note_duration_generator import generate_note_duration_with_genetic_algorithm
+from algorithms.phrase_generator_backtracking import BackTracking
+from algorithms.phrase_generator_genetic import generate_phrase_with_genetic_algorithm
 
 
 class TestBeatCraftSdk(unittest.TestCase):
     def test_generate_population(self):
-        series_duration=generate_note_duration_with_genetic_algorithm()
+        series_duration=generate_phrase_with_genetic_algorithm()
         print(series_duration)
 
     def test_backingtrack(self):

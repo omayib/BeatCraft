@@ -1,2 +1,2 @@
 from .core import BeatCraft
-from .config import Config
+from .config import BeatCraftConfig

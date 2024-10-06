@@ -1,6 +1,6 @@
 import random
 
-from algorithms.backtracking import BackTracking
+from algorithms.phrase_generator_backtracking import BackTracking
 
 # Define the possible note durations (in beats) in a 4/4 time signature
 note_durations = {
@@ -94,12 +94,8 @@ def mutation(individual):
 
 
 # Genetic Algorithm function
-def generate_note_duration_with_genetic_algorithm(generations=1000, population_size=50):
-    population1 = [create_individual() for _ in range(population_size)]
-    backingtrack = BackTracking()
-    combinations = backingtrack.generate_combinations()
-    population = [random.choice(combinations) for _ in range(50)]
-    print(f"population {population}")
+def generate_phrase_with_genetic_algorithm(generations=1000, population_size=50):
+    population = [create_individual() for _ in range(population_size)]
     for generation in range(generations):
         # Selection
         population = selection(population)

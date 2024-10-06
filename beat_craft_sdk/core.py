@@ -14,18 +14,16 @@ from utils.beat_craft_utils import get_current_time
 
 
 class BeatCraft:
-    def __init__(self, config=None, strategy=CraftingGenetic):
+    def __init__(self, config=None, melody_engine=None):
         self.config = config if config else BeatCraftConfig()
-        self.tempo = self.config.tempo
-        self.vibe = self.config.vibe
-        self.strategy = strategy
+        self.melody_engine = melody_engine if melody_engine else CraftingGenetic()
 
-    def set_strategy(self, strategy=CraftingGenetic):
-        self.strategy = strategy
+    def set_melody_engine(self, melody_engine):
+        self.melody_engine = melody_engine
 
     def generate_melody(self):
-        notes = self.strategy.generate(self)
-        self.strategy.evaluate(self)
+        notes = self.melody_engine.generate()
+        self.melody_engine.evaluate()
         print(f"notes in core generate music {notes}")
         return notes
 
@@ -56,7 +54,8 @@ class BeatCraft:
                 track.append(Message('note_off', note=0, velocity=0, time=ticks))
 
         # Save the MIDI file
-        mid.save('../.output/output.mid')
+        output_path = f"{self.config.get_output_dir()}/{self.config.get_file_name()}.mid"
+        mid.save(output_path)
 
     def play_generated_music(self,path):
         pygame.mixer.init()

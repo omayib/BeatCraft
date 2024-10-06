@@ -1,10 +1,10 @@
-from algorithms.note_duration_generator import note_durations
-from note_duration_generator import generate_note_duration_with_genetic_algorithm
+from algorithms.phrase_generator_genetic import note_durations
+from phrase_generator_genetic import generate_phrase_with_genetic_algorithm
 from scale_generator import generate_scale_with_genetic_algorithm
 import mido
 from mido import MidiFile, MidiTrack, Message
 
-solution = generate_note_duration_with_genetic_algorithm()
+solution = generate_phrase_with_genetic_algorithm()
 flattened_list = [item for sublist in solution for item in (sublist if isinstance(sublist, list) else [sublist])]
 print(f"flattened list {flattened_list}")
 
