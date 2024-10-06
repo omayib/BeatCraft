@@ -50,3 +50,4 @@ sdk = BeatCraft()
 sdk.generate_rythm('../.outputx/output_bt.wav','../.outputx')
 ```
 ## Instalation
+If you on edge cased by conflict, check the dipendencies we are used [here ](https://gist.github.com/omayib/193a608f4f84323f74c3e91a6c5ab813)
