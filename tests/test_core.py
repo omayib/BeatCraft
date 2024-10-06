@@ -28,7 +28,7 @@ class TestBeatCraftSdk(unittest.TestCase):
     def test_generate_melody_with_genetic(self):
         config = BeatCraftConfig()
         sdk = BeatCraft(config)
-        notes = sdk.generate_melody()
+        notes = sdk.compose_melody()
         self.assertGreater(len(notes),0,"list of notes are empty")
 
         sdk.melody_to_midi(notes)
@@ -38,7 +38,7 @@ class TestBeatCraftSdk(unittest.TestCase):
         btconfig = BeatCraftConfig(file_name='output_bt')
         sdk = BeatCraft(btconfig)
         sdk.set_melody_engine(CraftingBackingTrack())
-        notes = sdk.generate_melody()
+        notes = sdk.compose_melody()
         self.assertGreater(len(notes),0,"list of notes are empty")
 
         sdk.melody_to_midi(notes)

@@ -21,7 +21,7 @@ class BeatCraft:
     def set_melody_engine(self, melody_engine):
         self.melody_engine = melody_engine
 
-    def generate_melody(self):
+    def compose_melody(self):
         notes = self.melody_engine.generate()
         self.melody_engine.evaluate()
         print(f"notes in core generate music {notes}")
