@@ -54,7 +54,10 @@ class BeatCraft:
                 track.append(Message('note_off', note=0, velocity=0, time=ticks))
 
         # Save the MIDI file
-        output_path = f"{self.config.get_output_dir()}/{self.config.get_file_name()}.mid"
+        output_path = f"{BEATCRAFT_OUTPUT_DIR}/{BEATCRAFT_FILE_NAME}.mid"
+        print(f"output_path {BEATCRAFT_OUTPUT_DIR} ")
+        print(f"output_path {BEATCRAFT_FILE_NAME} ")
+        print(f"output_path {output_path} ")
         mid.save(output_path)
 
     def play_generated_music(self,path):

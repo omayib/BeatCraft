@@ -74,7 +74,7 @@ def generate_scale_with_genetic_algorithm(num_item=4):
         population = next_generation[:population_size]
 
         # Print progress
-        print(f"Generation {generation + 1}: Best fitness: {best_fitness}, Diversity: {diversity}")
+        # print(f"Generation {generation + 1}: Best fitness: {best_fitness}, Diversity: {diversity}")
 
     # Return the best sequence
     best_sequence = max(population, key=lambda seq: fitness_consonance(seq))
