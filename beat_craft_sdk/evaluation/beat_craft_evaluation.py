@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import os
-from utils.beat_craft_utils import get_current_time
+from beat_craft_sdk.utils.beat_craft_utils import get_current_time
 import numpy as np
 import librosa
 import json

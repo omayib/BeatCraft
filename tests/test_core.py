@@ -4,7 +4,7 @@ import unittest
 from beat_craft_sdk.config import BeatCraftConfig
 from beat_craft_sdk.core import BeatCraft
 from beat_craft_sdk.crafting_with_backingtrack import CraftingBackingTrack
-from utils.audio_converter import AudioConverter
+from beat_craft_sdk.utils.audio_converter import AudioConverter
 
 
 class TestBeatCraftSdk(unittest.TestCase):

@@ -1,7 +1,5 @@
 import random
 
-from algorithms.phrase_generator_backtracking import BackTracking
-
 # Define the possible note durations (in beats) in a 4/4 time signature
 note_durations = {
     "whole": 4,

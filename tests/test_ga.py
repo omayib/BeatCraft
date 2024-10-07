@@ -1,7 +1,7 @@
 import unittest
 
-from algorithms.phrase_generator_backtracking import BackTracking
-from algorithms.phrase_generator_genetic import generate_phrase_with_genetic_algorithm
+from beat_craft_sdk.algorithms.phrase_generator_backtracking import BackTracking
+from beat_craft_sdk.algorithms.phrase_generator_genetic import generate_phrase_with_genetic_algorithm
 
 
 class TestBeatCraftSdk(unittest.TestCase):

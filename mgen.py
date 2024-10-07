@@ -4,7 +4,7 @@ from typing import List, Dict
 from midiutil import MIDIFile
 from pyo import *
 
-from algorithms.genetic import generate_genome, Genome, selection_pair, single_point_crossover, mutation
+from beat_craft_sdk.algorithms.genetic import generate_genome, Genome, selection_pair, single_point_crossover, mutation
 
 BITS_PER_NOTE = 4
 KEYS = ["C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#", "Ab", "A", "A#", "Bb", "B"]

@@ -1,10 +1,9 @@
 import random
 
-from algorithms.phrase_generator_backtracking import BackTracking
-from algorithms.phrase_generator_genetic import generate_phrase_with_genetic_algorithm
-from algorithms.scale_generator import generate_scale_with_genetic_algorithm, num_generations
+from beat_craft_sdk.algorithms.phrase_generator_backtracking import BackTracking
+from beat_craft_sdk.algorithms.scale_generator import generate_scale_with_genetic_algorithm, num_generations
 from beat_craft_sdk.craft_strategy import CraftStrategy
-from evaluation.beat_craft_evaluation import plot_fitness_over_generations, plot_pitch_diversity_over_generation, \
+from beat_craft_sdk.evaluation.beat_craft_evaluation import plot_fitness_over_generations, plot_pitch_diversity_over_generation, \
     plot_ga_evaluation_into_json
 
 

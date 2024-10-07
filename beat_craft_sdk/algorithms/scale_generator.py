@@ -1,6 +1,6 @@
 import random
 
-from evaluation.beat_craft_evaluation import fitness_smoothness, population_diversity, fitness_consonance
+from beat_craft_sdk.evaluation.beat_craft_evaluation import population_diversity, fitness_consonance
 
 # Define the A minor scale using MIDI numbers
 A_minor_scale_midi = [0, 57, 59, 60, 62, 64, 65, 67]  # A, B, C, D, E, F, G

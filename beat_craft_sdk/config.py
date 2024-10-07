@@ -1,6 +1,6 @@
 import os
 
-from utils.beat_craft_utils import get_current_time
+from beat_craft_sdk.utils.beat_craft_utils import get_current_time
 
 default_output_dir = './../.outputx'
 

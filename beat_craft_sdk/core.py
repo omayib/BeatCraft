@@ -8,9 +8,9 @@ import torchaudio
 from audiocraft.models import MusicGen
 from audiocraft.data.audio import audio_write
 
-from evaluation.beat_craft_evaluation import plot_mel_spectrogram, plot_waveform, plot_spectrogram, plot_pitch_contour, \
+from beat_craft_sdk.evaluation.beat_craft_evaluation import plot_mel_spectrogram, plot_waveform, plot_spectrogram, plot_pitch_contour, \
     load_audio_file
-from utils.beat_craft_utils import get_current_time
+from beat_craft_sdk.utils.beat_craft_utils import get_current_time
 
 
 class BeatCraft:

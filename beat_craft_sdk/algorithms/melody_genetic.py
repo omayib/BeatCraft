@@ -1,4 +1,3 @@
-from algorithms.phrase_generator_genetic import note_durations
 from phrase_generator_genetic import generate_phrase_with_genetic_algorithm
 from scale_generator import generate_scale_with_genetic_algorithm
 import mido
