@@ -3,3 +3,7 @@
 .idea/workspace.xml
 .output
 */__pycache__/*
+build/
+dist/
+*.egg-info/
+*.egg
