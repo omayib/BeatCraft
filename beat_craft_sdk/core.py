@@ -22,8 +22,8 @@ class BeatCraft:
         self.melody_engine = melody_engine
 
     def compose_melody(self):
-        notes = self.melody_engine.generate()
-        self.melody_engine.evaluate()
+        notes = self.melody_engine.generate(self.config.get_output_dir(),self.config.get_file_name())
+        self.melody_engine.evaluate(self.config.get_output_dir(),self.config.get_file_name())
         print(f"notes in core generate music {notes}")
         return notes
 
@@ -54,21 +54,20 @@ class BeatCraft:
                 track.append(Message('note_off', note=0, velocity=0, time=ticks))
 
         # Save the MIDI file
-        output_path = f"{BEATCRAFT_OUTPUT_DIR}/{BEATCRAFT_FILE_NAME}.mid"
-        print(f"output_path {BEATCRAFT_OUTPUT_DIR} ")
-        print(f"output_path {BEATCRAFT_FILE_NAME} ")
+        output_path = f"{self.config.get_output_dir()}/{self.config.get_file_name()}.mid"
         print(f"output_path {output_path} ")
         mid.save(output_path)
 
-    def play_generated_music(self,path):
+    def play_generated_music(self, path):
         pygame.mixer.init()
         pygame.mixer.music.load(path)
         pygame.mixer.music.play()
 
         while pygame.mixer.music.get_busy():
             pass
-    def generate_rythm(self,audio_melody_path='./.output/output.wav',output_dir='.output'):
+    def generate_rythm(self,melody_file_name):
 
+        audio_melody_path = f"{self.config.get_output_dir()}/{melody_file_name}.wav"
         model = MusicGen.get_pretrained('melody')
         model.set_generation_params(duration=8)  # generate 8 seconds.
 
@@ -78,27 +77,19 @@ class BeatCraft:
         # generates using the melody from the given audio and the provided descriptions.
         wav = model.generate_with_chroma(descriptions, melody[None].expand(3, -1, -1), sr)
 
-        # Create the directory if it doesn't exist
-        os.makedirs(output_dir, exist_ok=True)
-
         for idx, one_wav in enumerate(wav):
-            output_filename = f'{idx}_{get_current_time()}'
+            output_filename = f'{idx}_{get_current_time()}_{self.config.get_file_name()}'
             # Full path where the audio will be saved
-            output_path = os.path.join(output_dir, output_filename)
+            output_path = os.path.join(self.config.get_output_dir(), output_filename)
             # Will save under {idx}.wav, with loudness normalization at -14 db LUFS.
             audio_write(stem_name=output_path, wav=one_wav.cpu(), sample_rate=model.sample_rate, strategy="loudness")
 
             audio_data, sample_rate = load_audio_file(f"{output_path}.wav")
 
-            plot_pitch_contour(audio_data,sample_rate, "../.output")
-            plot_mel_spectrogram(audio_data,sample_rate,"../.output")
-            plot_waveform(audio_data, sample_rate, "../.output")
-            plot_spectrogram(audio_data, sample_rate, "../.output")
+            plot_pitch_contour(audio_data,sample_rate, self.config.get_output_dir(), self.config.get_file_name())
+            plot_mel_spectrogram(audio_data,sample_rate,self.config.get_output_dir(), self.config.get_file_name())
+            plot_waveform(audio_data, sample_rate, self.config.get_output_dir(), self.config.get_file_name())
+            plot_spectrogram(audio_data, sample_rate, self.config.get_output_dir(), self.config.get_file_name())
 
-    def greet(self,name):
-        return f"Hi,{name}"
-
-    def get_tempo(self):
-        return self.config.tempo
-    def get_vibe(self):
-        return self.config.vibe
+    def get_config(self):
+        return self.config

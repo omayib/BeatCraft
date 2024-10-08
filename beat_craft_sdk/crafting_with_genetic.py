@@ -1,4 +1,3 @@
-from beat_craft_sdk.config import BeatCraftConfig, BEATCRAFT_OUTPUT_DIR, BEATCRAFT_FILE_NAME
 from beat_craft_sdk.algorithms.phrase_generator_genetic import generate_phrase_with_genetic_algorithm
 from beat_craft_sdk.algorithms.scale_generator import generate_scale_with_genetic_algorithm, num_generations
 from beat_craft_sdk.craft_strategy import CraftStrategy
@@ -12,7 +11,7 @@ class CraftingGenetic(CraftStrategy):
         self.pitch_fitness_per_generations = []
         self.pitch_diversity_per_generation = []
 
-    def generate(self):
+    def generate(self,output_dir,file_name):
         phrase = generate_phrase_with_genetic_algorithm()
         flattened_phrase= [item for sublist in phrase for item in
                           (sublist if isinstance(sublist, list) else [sublist])]
@@ -20,7 +19,7 @@ class CraftingGenetic(CraftStrategy):
         paired_notes = list(zip(flattened_phrase, series_scale))
         return paired_notes
 
-    def evaluate(self):
-        plot_fitness_over_generations(num_generations, self.pitch_fitness_per_generations, BEATCRAFT_OUTPUT_DIR)
-        plot_pitch_diversity_over_generation(num_generations, self.pitch_diversity_per_generation,BEATCRAFT_OUTPUT_DIR)
-        plot_ga_evaluation_into_json(self.pitch_diversity_per_generation,self.pitch_fitness_per_generations,BEATCRAFT_OUTPUT_DIR)
+    def evaluate(self,output_dir,file_name):
+        plot_fitness_over_generations(num_generations, self.pitch_fitness_per_generations,output_dir,file_name)
+        plot_pitch_diversity_over_generation(num_generations, self.pitch_diversity_per_generation,output_dir,file_name)
+        plot_ga_evaluation_into_json(self.pitch_diversity_per_generation,self.pitch_fitness_per_generations,output_dir,file_name)

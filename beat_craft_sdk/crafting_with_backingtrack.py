@@ -5,7 +5,6 @@ from beat_craft_sdk.algorithms.scale_generator import generate_scale_with_geneti
 from beat_craft_sdk.craft_strategy import CraftStrategy
 from beat_craft_sdk.evaluation.beat_craft_evaluation import plot_fitness_over_generations, plot_pitch_diversity_over_generation, \
     plot_ga_evaluation_into_json
-from beat_craft_sdk.config import BeatCraftConfig, BEATCRAFT_OUTPUT_DIR
 
 
 class CraftingBackingTrack(CraftStrategy):
@@ -14,7 +13,7 @@ class CraftingBackingTrack(CraftStrategy):
         self.pitch_fitness_per_generations = []
         self.pitch_diversity_per_generation = []
 
-    def generate(self):
+    def generate(self,output_dir,file_name):
         bt = BackTracking()
         combs = bt.generate_combinations()
         flattened_phrase= random.choice(combs)
@@ -22,7 +21,7 @@ class CraftingBackingTrack(CraftStrategy):
         paired_notes = list(zip(flattened_phrase, series_scale))
         return paired_notes
 
-    def evaluate(self):
-        plot_fitness_over_generations(num_generations, self.pitch_fitness_per_generations,BEATCRAFT_OUTPUT_DIR )
-        plot_pitch_diversity_over_generation(num_generations, self.pitch_diversity_per_generation,BEATCRAFT_OUTPUT_DIR)
-        plot_ga_evaluation_into_json(self.pitch_diversity_per_generation,self.pitch_fitness_per_generations,BEATCRAFT_OUTPUT_DIR)
+    def evaluate(self,output_dir,file_name):
+        plot_fitness_over_generations(num_generations, self.pitch_fitness_per_generations,output_dir,file_name)
+        plot_pitch_diversity_over_generation(num_generations, self.pitch_diversity_per_generation,output_dir,file_name)
+        plot_ga_evaluation_into_json(self.pitch_diversity_per_generation,self.pitch_fitness_per_generations,output_dir,file_name)

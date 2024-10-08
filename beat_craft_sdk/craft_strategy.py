@@ -3,9 +3,9 @@ from abc import abstractmethod
 
 class CraftStrategy():
     @abstractmethod
-    def generate(self):
+    def generate(self,output_dir,file_name):
         pass
 
     @abstractmethod
-    def evaluate(self):
+    def evaluate(self,output_dir,file_name):
         pass

@@ -48,8 +48,8 @@ def unique_individuals(population):
     unique_sequences = set(tuple(seq) for seq in population)
     return len(unique_sequences) / len(population)  # Fraction of unique sequences
 
-def plot_fitness_over_generations(num_generation,fitness_per_generations,output_dir):
-    filename = f"fitness_score_evaluation_{get_current_time()}.png"
+def plot_fitness_over_generations(num_generation,fitness_per_generations,output_dir,file_name):
+    filename = f"fitness_score_evaluation_{get_current_time()}_{file_name}.png"
     output_path = os.path.join(output_dir, filename)
     plt.figure()
     plt.plot(range(1,num_generation+1),fitness_per_generations,marker='o')
@@ -59,8 +59,8 @@ def plot_fitness_over_generations(num_generation,fitness_per_generations,output_
     plt.grid(True)
     plt.savefig(output_path)
 
-def plot_pitch_diversity_over_generation(num_generation,diversity_per_generation,output_dir):
-    filename = f"pitch_diversity_evaluation_{get_current_time()}.png"
+def plot_pitch_diversity_over_generation(num_generation,diversity_per_generation,output_dir,file_name):
+    filename = f"pitch_diversity_evaluation_{get_current_time()}_{file_name}.png"
     output_path = os.path.join(output_dir, filename)
     plt.figure()
     plt.plot(range(1, num_generation + 1), diversity_per_generation, marker='o', color='orange')
@@ -70,9 +70,9 @@ def plot_pitch_diversity_over_generation(num_generation,diversity_per_generation
     plt.grid(True)
     plt.savefig(output_path)
 
-def plot_waveform(audio_data,sample_rate, output_dir):
+def plot_waveform(audio_data,sample_rate, output_dir,file_name):
     validate_audio_data(audio_data)
-    filename = f"waveform_generated_music_{get_current_time()}.png"
+    filename = f"waveform_generated_music_{get_current_time()}_{file_name}.png"
     output_path = os.path.join(output_dir, filename)
     # Create time axis
     time = np.linspace(0, len(audio_data) / sample_rate, num=len(audio_data))
@@ -84,16 +84,16 @@ def plot_waveform(audio_data,sample_rate, output_dir):
     plt.ylabel("Amplitude")
     plt.savefig(output_path)
 
-    plot_audio_analyze_into_json(filename,
-                                 'Time',
+    plot_audio_analyze_into_json('Time',
                                  time,
                                  'Amplitude',
                                  audio_data,
-                                 output_dir)
+                                 output_dir,
+                                 file_name)
 
-def plot_spectrogram(audio_data,sample_rate, output_dir):
+def plot_spectrogram(audio_data,sample_rate, output_dir,file_name):
     validate_audio_data(audio_data)
-    filename = f"spectrogram_generated_music_{get_current_time()}.png"
+    filename = f"spectrogram_generated_music_{get_current_time()}_{file_name}.png"
     output_path = os.path.join(output_dir, filename)
     plt.figure(figsize=(10, 6))
     D = librosa.amplitude_to_db(np.abs(librosa.stft(audio_data)), ref=np.max)
@@ -108,16 +108,16 @@ def plot_spectrogram(audio_data,sample_rate, output_dir):
     # Extract Y data (frequency in Hz)
     frequencies = librosa.fft_frequencies(sr=sample_rate)
 
-    plot_audio_analyze_into_json(filename,
-                                 'Time',
+    plot_audio_analyze_into_json('Time',
                                  time,
                                  'Spectrogram (log)',
                                  frequencies,
-                                 output_dir)
+                                 output_dir,
+                                 filename)
 
-def plot_mel_spectrogram(audio_data,sample_rate, output_dir):
+def plot_mel_spectrogram(audio_data,sample_rate, output_dir,file_name):
     validate_audio_data(audio_data)
-    filename = f"mel_spectrogram_generated_music_{get_current_time()}.png"
+    filename = f"mel_spectrogram_generated_music_{get_current_time()}_{file_name}.png"
     output_path = os.path.join(output_dir, filename)
     mel_spect = librosa.feature.melspectrogram(y=audio_data, sr=sample_rate, n_mels=128)
     mel_spect_db = librosa.power_to_db(mel_spect, ref=np.max)
@@ -142,16 +142,16 @@ def plot_mel_spectrogram(audio_data,sample_rate, output_dir):
     plt.colorbar(format='%+2.0f dB')
     plt.title('Mel Spectrogram of Generated Music')
     plt.savefig(output_path)
-    plot_audio_analyze_into_json(filename,
-                                 'Time',
+    plot_audio_analyze_into_json('Time',
                                  time,
                                  'Mel',
                                  frequencies,
-                                 output_dir)
+                                 output_dir,
+                                 filename)
 
-def plot_pitch_contour(audio_data,sample_rate, output_dir):
+def plot_pitch_contour(audio_data,sample_rate, output_dir,file_name):
     validate_audio_data(audio_data)
-    filename = f"pitch_contour_generated_music_{get_current_time()}.png"
+    filename = f"pitch_contour_generated_music_{get_current_time()}_{file_name}.png"
     output_path = os.path.join(output_dir, filename)
     # Pitch and harmonic analysis
     harmonic, _ = librosa.effects.hpss(audio_data)
@@ -166,12 +166,12 @@ def plot_pitch_contour(audio_data,sample_rate, output_dir):
     plt.ylabel('Pitch (Hz)')
     plt.legend()
     plt.savefig(output_path)
-    plot_audio_analyze_into_json(filename,
-                                 'Time (frames)',
+    plot_audio_analyze_into_json('Time (frames)',
                                  time,
                                  'Pitch (Hz)',
                                  pitch,
-                                 output_dir)
+                                 output_dir,
+                                 filename)
 def validate_audio_data(audio_data):
     if len(audio_data) == 0 or np.all(audio_data == 0):
         print("Error: Audio data is empty or consists of only zeros.")
@@ -190,8 +190,8 @@ def load_audio_file(file_path):
         print(f"Error loading audio file: {e}")
         return None, None
 
-def plot_ga_evaluation_into_json(diversity_per_generation, best_fitness_per_generation,output_dir):
-    filename = f"ga_evaluation_{get_current_time()}.json"
+def plot_ga_evaluation_into_json(diversity_per_generation, best_fitness_per_generation,output_dir,file_name):
+    filename = f"ga_evaluation_{get_current_time()}_{file_name}.json"
     output_path = os.path.join(output_dir, filename)
     data = {
         "diversity_per_generation": diversity_per_generation,
@@ -201,8 +201,8 @@ def plot_ga_evaluation_into_json(diversity_per_generation, best_fitness_per_gene
     with open(output_path, 'w') as json_file:
         json.dump(data, json_file, indent=4)
 
-def plot_audio_analyze_into_json(file_name,x_label,x_data,y_label,y_data,output_dir):
-    filename = f"{file_name}_{get_current_time()}.json"
+def plot_audio_analyze_into_json(x_label,x_data,y_label,y_data,output_dir,file_name):
+    filename = f"audio_analyze_{get_current_time()}_{file_name}.json"
     output_path = os.path.join(output_dir, filename)
     data = {
         f"{x_label}": json.dumps(x_data.tolist()),
