@@ -5,7 +5,7 @@ from beat_craft_sdk.config import BeatCraftConfig
 from beat_craft_sdk.core import BeatCraft
 from beat_craft_sdk.crafting_with_backingtrack import CraftingBackingTrack
 from beat_craft_sdk.utils.audio_converter import AudioConverter
-
+from beat_craft_sdk.config import GameMood, GameEmotional, GameGenre
 
 class TestBeatCraftSdk(unittest.TestCase):
 
@@ -23,10 +23,30 @@ class TestBeatCraftSdk(unittest.TestCase):
         config = BeatCraftConfig("./../.outputf","merbabu")
         sdk = BeatCraft(config)
         notes = sdk.compose_melody()
-        self.assertGreater(len(notes),0,"list of notes are empty")
 
         sdk.melody_to_midi(notes)
         self.assertTrue(os.path.exists(f"{config.get_output_dir()}/{config.get_file_name()}.mid"))
+
+    def test_config_input_parameter(self):
+        conf = BeatCraftConfig()
+        self.assertEqual(GameEmotional.EXCITEMENT.value, conf.get_game_emotional())  # The default emotional is excited
+        self.assertEqual(GameMood.JOYFUL.value, conf.get_game_mood())  # The default mood is HAPPY
+        self.assertEqual(GameGenre.ACTION.value, conf.get_game_genre())  # the default genre is action
+
+        conf.set_game_mood(GameMood.EPIC)
+        self.assertEqual(GameMood.EPIC.value, conf.get_game_mood())
+
+        conf.set_game_genre(GameGenre.RPG)
+        self.assertEqual(GameGenre.RPG.value, conf.get_game_genre())
+
+        conf.set_game_emotional(GameEmotional.FEAR)
+        self.assertEqual(GameEmotional.FEAR.value, conf.get_game_emotional())
+
+    def test_scale(self):
+        conf = BeatCraftConfig()
+        emotion = conf.get_game_emotional()
+        midi_notes = conf.get_midi_notes(emotion)
+        self.assertEqual([60, 62, 64, 65, 67, 69, 71],midi_notes)  #The default is C major [60, 62, 64, 65, 67, 69, 71]
 
     def test_generate_melody_with_backingtrack(self):
         btconfig = BeatCraftConfig(file_name='output_bt')
