@@ -11,11 +11,11 @@ class CraftingGenetic(CraftStrategy):
         self.pitch_fitness_per_generations = []
         self.pitch_diversity_per_generation = []
 
-    def generate(self,output_dir,file_name):
+    def generate(self,output_dir,file_name, scale):
         phrase = generate_phrase_with_genetic_algorithm()
         flattened_phrase= [item for sublist in phrase for item in
                           (sublist if isinstance(sublist, list) else [sublist])]
-        series_scale, self.pitch_fitness_per_generations, self.pitch_diversity_per_generation = generate_scale_with_genetic_algorithm(len(flattened_phrase))
+        series_scale, self.pitch_fitness_per_generations, self.pitch_diversity_per_generation = generate_scale_with_genetic_algorithm(len(flattened_phrase),scale)
         paired_notes = list(zip(flattened_phrase, series_scale))
         return paired_notes
 

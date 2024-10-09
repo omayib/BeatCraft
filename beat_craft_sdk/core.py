@@ -22,7 +22,7 @@ class BeatCraft:
         self.melody_engine = melody_engine
 
     def compose_melody(self):
-        notes = self.melody_engine.generate(self.config.get_output_dir(),self.config.get_file_name())
+        notes = self.melody_engine.generate(self.config.get_output_dir(),self.config.get_file_name(), self.config.get_midi_notes(self.config.get_game_emotional()))
         self.melody_engine.evaluate(self.config.get_output_dir(),self.config.get_file_name())
         print(f"notes in core generate music {notes}")
         return notes
@@ -70,12 +70,12 @@ class BeatCraft:
         audio_melody_path = f"{self.config.get_output_dir()}/{melody_file_name}.wav"
         model = MusicGen.get_pretrained('melody')
         model.set_generation_params(duration=8)  # generate 8 seconds.
-
-        descriptions = ['high-energy electronic with fast beats', 'energetic and bouncy with fast rhythm','fun and quirky with upbeat chimes']
+        desc = f"{self.config.get_game_emotional()} {self.config.get_game_mood()}"
+        descriptions = [desc]
 
         melody, sr = torchaudio.load(audio_melody_path)
         # generates using the melody from the given audio and the provided descriptions.
-        wav = model.generate_with_chroma(descriptions, melody[None].expand(3, -1, -1), sr)
+        wav = model.generate_with_chroma(descriptions, melody[None].expand(1, -1, -1), sr)
 
         for idx, one_wav in enumerate(wav):
             output_filename = f'{idx}_{get_current_time()}_{self.config.get_file_name()}'

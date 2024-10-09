@@ -3,7 +3,7 @@ import random
 from beat_craft_sdk.evaluation.beat_craft_evaluation import population_diversity, fitness_consonance
 
 # Define the A minor scale using MIDI numbers
-A_minor_scale_midi = [0, 57, 59, 60, 62, 64, 65, 67]  # A, B, C, D, E, F, G
+# A_minor_scale_midi = [0, 57, 59, 60, 62, 64, 65, 67]  # A, B, C, D, E, F, G
 
 # User input for series length and population size
 series_length = 4
@@ -11,10 +11,10 @@ population_size = 100
 num_generations = 500
 
 # Initialize population
-def initialize_population(population_size, series_length):
+def initialize_population(population_size, series_length, scale):
     population = []
     for _ in range(population_size):
-        sequence = [random.choice(A_minor_scale_midi) for _ in range(series_length)]
+        sequence = [random.choice(scale) for _ in range(series_length)]
         population.append(sequence)
     return population
 
@@ -35,16 +35,16 @@ def crossover(parent1, parent2):
 
 
 # Mutation function: Mutates a sequence
-def mutate(sequence, mutation_rate=0.1):
+def mutate(sequence, mutation_rate=0.1,scale=None):
     for i in range(len(sequence)):
         if random.random() < mutation_rate:
-            sequence[i] = random.choice(A_minor_scale_midi)
+            sequence[i] = random.choice(scale)
     return sequence
 
 
 # Main genetic algorithm
-def generate_scale_with_genetic_algorithm(num_item=4):
-    population = initialize_population(population_size, num_item)
+def generate_scale_with_genetic_algorithm(num_item=4, scale=None):
+    population = initialize_population(population_size, num_item, scale)
 
     best_fitness_per_generation = []  # To store the best fitness of each generation
     diversity_per_generation = []     # To store the diversity of each generation (genotypic)
@@ -67,8 +67,8 @@ def generate_scale_with_genetic_algorithm(num_item=4):
         while len(next_generation) < population_size:
             parent1, parent2 = random.sample(parents, 2)
             child1, child2 = crossover(parent1, parent2)
-            next_generation.append(mutate(child1))
-            next_generation.append(mutate(child2))
+            next_generation.append(mutate(sequence=child1,scale=scale))
+            next_generation.append(mutate(sequence=child2,scale=scale))
 
         # Replace old population with new generation
         population = next_generation[:population_size]

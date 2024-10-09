@@ -23,7 +23,7 @@ class TestBeatCraftSdk(unittest.TestCase):
         config = BeatCraftConfig("./../.outputf","merbabu")
         sdk = BeatCraft(config)
         notes = sdk.compose_melody()
-
+        print(f"notes {notes}")
         sdk.melody_to_midi(notes)
         self.assertTrue(os.path.exists(f"{config.get_output_dir()}/{config.get_file_name()}.mid"))
 
@@ -57,9 +57,29 @@ class TestBeatCraftSdk(unittest.TestCase):
 
         sdk.melody_to_midi(notes)
         self.assertTrue(os.path.exists(f"{btconfig.get_output_dir()}/{btconfig.get_file_name()}.mid"))
+    def test_generate_melody_controlled_input(self):
+        btconfig = BeatCraftConfig(output_dir="./../.outputr", file_name='semut3')
+        sdk = BeatCraft(btconfig)
+
+        btconfig.set_game_mood(GameMood.JOYFUL)
+        btconfig.set_game_genre(GameGenre.ACTION)
+        btconfig.set_game_emotional(GameEmotional.EXCITEMENT)
+
+        notes = sdk.compose_melody()
+        sdk.melody_to_midi(notes)
+        sdk.play_generated_music(f"{btconfig.get_output_dir()}/{btconfig.get_file_name()}.mid")
+
+        conv = AudioConverter(f"{btconfig.get_output_dir()}/{btconfig.get_file_name()}.mid",
+                              f"{btconfig.get_output_dir()}/{btconfig.get_file_name()}.wav")
+        conv.midi_to_wav()
+
+
+        sdk.generate_rythm(sdk.get_config().get_file_name())
+
+        pass
 
     def test_sdk_play_midi_generated(self):
-        config = BeatCraftConfig(file_name='output_bt')
+        config = BeatCraftConfig(output_dir="../.outputf", file_name='merbabu')
         sdk = BeatCraft(config)
         sdk.play_generated_music(f"{config.get_output_dir()}/{config.get_file_name()}.mid")
 
