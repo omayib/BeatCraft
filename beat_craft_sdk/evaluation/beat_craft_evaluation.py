@@ -9,10 +9,45 @@ def fitness_smoothness(sequence):
     total_jump = sum(abs(sequence[i] - sequence[i + 1]) for i in range(len(sequence) - 1))
     return 1 / (1 + total_jump)
 
-consonant_intervals = {0, 7, 12}
-def fitness_consonance(sequence):
-    consonant_pairs = sum(1 for i in range(len(sequence) - 1) if abs(sequence[i] - sequence[i + 1]) in consonant_intervals)
-    return consonant_pairs / (len(sequence) - 1)
+def classify_scale(scale):
+    # Define known scale patterns
+    major = [60, 62, 64, 65, 67, 69, 71]
+    minor = [60, 62, 63, 65, 67, 68, 70]
+    pentatonic = [60, 62, 64, 67, 69]
+    dorian = [60, 62, 63, 65, 67, 69, 70]
+
+    # Check if the given scale matches any of the predefined scales
+    if scale == major:
+        return "Major"
+    elif scale == minor:
+        return "Minor"
+    elif scale == pentatonic:
+        return "Pentatonic"
+    elif scale == dorian:
+        return "Dorian"
+    else:
+        return "Unknown scale"
+
+def fitness_consonance(sequence, scale_type):
+    # Define consonant intervals for each scale type
+    scale_intervals = {
+        "Major": [0, 4, 5, 7, 12],  # unison, major third, perfect fourth, perfect fifth, octave
+        "Minor": [0, 3, 4, 5, 7, 12],  # unison, minor third, major third, perfect fourth, perfect fifth, octave
+        "Pentatonic": [0, 3, 5, 7, 12],  # unison, minor third, perfect fourth, perfect fifth, octave
+        "Dorian": [0, 3, 4, 5, 7, 12]  # unison, minor third, major third, perfect fourth, perfect fifth, octave
+    }
+    consonant_intervals = scale_intervals.get(scale_type, [])
+    # Evaluate consonance score
+    score = 0
+
+    for i in range(len(sequence) - 1):
+        interval = abs(sequence[i + 1] - sequence[i])  # Calculate interval between consecutive notes
+        if interval in consonant_intervals:
+            score += 1  # Increase score for consonant intervals
+        else:
+            score -= 1  # Decrease score for dissonant intervals
+
+    return score
 
 def fitness_rhythmic_variety(sequence):
     variety = len(set(sequence)) / len(sequence)
@@ -20,7 +55,7 @@ def fitness_rhythmic_variety(sequence):
 
 def combined_fitness(sequence):
     smoothness_score = fitness_smoothness(sequence)
-    consonance_score = fitness_consonance(sequence)
+    consonance_score = fitness_consonance(sequence,"")
     variety_score = fitness_rhythmic_variety(sequence)
     return 0.4 * smoothness_score + 0.4 * consonance_score + 0.2 * variety_score
 

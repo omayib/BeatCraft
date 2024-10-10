@@ -36,7 +36,7 @@ class GameGenre(Enum):
         }
         # Return default genre into ACTION
         return genre_map.get(ritme, GameGenre.ACTION)
-    
+
     @staticmethod
     def to_transformer_ritme(emotional_enum):
         transformer_map = {
@@ -63,7 +63,7 @@ class GameMood(Enum):
     EPIC="Grand and orchestral"
     RELAXING="Relaxing"
     TENSE="Dark and suspenseful"
-    
+
     @staticmethod
     def from_transformer_data(ritme):
         mood_map = {
@@ -75,7 +75,7 @@ class GameMood(Enum):
             'With force': GameMood.TENSE, 'Animated': GameMood.JOYFUL,
             'Boldly': GameMood.EPIC, 'Cheerful': GameMood.JOYFUL,
             'Gheerfully': GameMood.JOYFUL, 'Graceful': GameMood.SERENE,
-            'Lively': GameMood.JOYFUL, 'Distinctly': GameMood.RELAXING,  
+            'Lively': GameMood.JOYFUL, 'Distinctly': GameMood.RELAXING,
             'Moderate': GameMood.TENSE, 'Plaintive': GameMood.TENSE,
             'Plaintively': GameMood.TENSE, 'Quick and spirit': GameMood.EPIC,
             'Rather slow': GameMood.RELAXING,'Slow': GameMood.RELAXING,
@@ -83,18 +83,18 @@ class GameMood(Enum):
             'Slow and tenderly': GameMood.RELAXING,'Slow with expression': GameMood.RELAXING,
             'Slow with feeling': GameMood.RELAXING,'Slow, with expression': GameMood.RELAXING,
             'Spirited': GameMood.EPIC,'Unknown': GameMood.SERENE,
-            'Very slow': GameMood.RELAXING, 'Very slow and plaintive': GameMood.TENSE, 
+            'Very slow': GameMood.RELAXING, 'Very slow and plaintive': GameMood.TENSE,
             'With Animation': GameMood.JOYFUL,'With expression': GameMood.RELAXING,
             'With feeling': GameMood.RELAXING, 'With spirit and feeling': GameMood.EPIC
         }
 
         return mood_map.get(ritme, GameMood.SERENE)  # Default ke SERENE jika ritme tidak dikenali
-    
+
     @staticmethod
     def to_transformer_ritme(mood_enum):
         transformer_map = {
             GameMood.JOYFUL: [
-                'Cheerfully', 'Playfully', 'Gaily', 'Lively', 'With Animation', 'Happy', 
+                'Cheerfully', 'Playfully', 'Gaily', 'Lively', 'With Animation', 'Happy',
                 'Animated', 'Cheerful', 'Gheerfully', 'Quick and spirit'
             ],
             GameMood.SERENE: [
@@ -102,12 +102,12 @@ class GameMood(Enum):
                 'Graceful', 'Unknown'
             ],
             GameMood.EPIC: [
-                'With spirit', 'Brilliant', 'Majestic', 'Grandly', 'Heroic', 'Triumphant', 
+                'With spirit', 'Brilliant', 'Majestic', 'Grandly', 'Heroic', 'Triumphant',
                 'Boldly', 'Spirited', 'Quick and spirit', 'With spirit and feeling'
             ],
             GameMood.RELAXING: [
                 'Slow and with feeling', 'Tenderly', 'Calm', 'Smoothly', 'Warmly', 'Slow',
-                'Rather slow', 'Slow and distinctly', 'Slow with expression', 'Slow with feeling', 
+                'Rather slow', 'Slow and distinctly', 'Slow with expression', 'Slow with feeling',
                 'Slow, with expression', 'Very slow', 'Distinctly', 'Moderate'
             ],
             GameMood.TENSE: [
@@ -123,7 +123,7 @@ class GameEmotional(Enum):  # Mapping into music scale
     FEAR = "Minor"
     PEACEFUL = "Pentatonic"
     CHALLENGE = "Dorian"
-    
+
     # Updated dictionary with enum member names as keys
     emotional_to_midi = {
         "EXCITEMENT": [60, 62, 64, 65, 67, 69, 71],   # Major scale for EXCITEMENT
@@ -163,41 +163,40 @@ class GameEmotional(Enum):  # Mapping into music scale
     def to_transformer_ritme(emotional_enum):
         transformer_map = {
             GameEmotional.EXCITEMENT: [
-                'Cheerfully', 'Playfully', 'Gaily', 'Lively', 'With Animation', 'Happy', 
+                'Cheerfully', 'Playfully', 'Gaily', 'Lively', 'With Animation', 'Happy',
                 'Animated', 'Cheerful', 'Gheerfully', 'Brilliant'
             ],
             GameEmotional.PEACEFUL: [
-                'Gracefully', 'Tenderly', 'Graceful', 'Slow', 'Rather slow', 
-                'Slow and with feeling', 'Slow with expression', 'Slow with feeling', 
+                'Gracefully', 'Tenderly', 'Graceful', 'Slow', 'Rather slow',
+                'Slow and with feeling', 'Slow with expression', 'Slow with feeling',
                 'Slow, with expression', 'Very slow'
             ],
             GameEmotional.CHALLENGE: [
-                'Quick and spirit', 'Boldly', 'With spirit', 'Spirited', 'With spirit and feeling', 
-                'Majestic', 'Grandly', 'Heroic', 'Triumphant', 'With force', 
+                'Quick and spirit', 'Boldly', 'With spirit', 'Spirited', 'With spirit and feeling',
+                'Majestic', 'Grandly', 'Heroic', 'Triumphant', 'With force',
                 'Distinctly', 'Moderate', 'Unknown'
             ],
             GameEmotional.FEAR: [
-                'Mournful', 'Slow and mournful', 'Plaintive', 'Plaintively', 
+                'Mournful', 'Slow and mournful', 'Plaintive', 'Plaintively',
                 'Slow and plaintive', 'Very slow and plaintive'
             ]
         }
-        
+
         return transformer_map.get(emotional_enum, ['Cheerfully'])
 
 
 class BeatCraftConfig:
 
     DEFAULT_OUTPUT_DIR = './../.outputx'
-    C_major = [60, 62, 64, 65, 67, 69, 71]
-    C_minor = [60, 62, 63, 65, 67, 68, 70]
-    C_pentatonic = [60, 62, 64, 67, 69]
-    C_dorian = [60, 62, 63, 65, 67, 69, 70]
-    
+    major = [60, 62, 64, 65, 67, 69, 71]
+    minor = [60, 62, 63, 65, 67, 68, 70]
+    pentatonic = [60, 62, 64, 67, 69]
+    dorian = [60, 62, 63, 65, 67, 69, 70]
     emotional_to_midi = {
-        GameEmotional.EXCITEMENT.value: C_major,
-        GameEmotional.FEAR.value: C_minor,
-        GameEmotional.PEACEFUL.value: C_pentatonic,
-        GameEmotional.CHALLENGE.value: C_dorian
+        GameEmotional.EXCITEMENT.value: major,
+        GameEmotional.FEAR.value: minor,
+        GameEmotional.PEACEFUL.value: pentatonic,
+        GameEmotional.CHALLENGE.value: dorian
     }
 
     def __init__(self,output_dir=None, file_name=None):
@@ -256,14 +255,14 @@ class BeatCraftConfig:
 # Separate class for Transformer Config
 class TransformerConfig:
     DEFAULT_OUTPUT_DIR = './../.outputx'
-    
+
     emotional_to_midi = {
         GameEmotional.EXCITEMENT: [60, 62, 64, 65, 67, 69, 71],  # Major scale
         GameEmotional.FEAR: [60, 62, 63, 65, 67, 68, 70],         # Minor scale
         GameEmotional.PEACEFUL: [60, 62, 64, 67, 69],             # Pentatonic scale
         GameEmotional.CHALLENGE: [60, 62, 63, 65, 67, 69, 70]     # Dorian scale
     }
-    
+
     def __init__(self, file_name=None, output_dir=None):
         self.file_name= file_name
         self.output_dir = "./transformer_output"
@@ -285,39 +284,39 @@ class TransformerConfig:
 
         if self.file_name is None:
             self.file_name = get_current_time()
-    
+
     def get_output_dir(self):
         return self.output_dir
 
     def get_file_name(self):
         return self.file_name
-    
+
     def set_game_genre(self, game_genre: GameGenre):
         self.genre = GameGenre.to_transformer_ritme(game_genre)
-    
+
     def get_game_genre(self):
         return self.genre
 
     def set_game_mood(self, game_mood: GameMood):
         self.mood = GameMood.to_transformer_ritme(game_mood)
-    
+
     def get_game_mood(self):
         return self.mood
-    
+
     def set_game_emotional(self, game_emotional: GameEmotional):
         self.emotional = GameEmotional.to_transformer_ritme(game_emotional)
 
     def get_game_emotional(self):
         return self.emotional
-    
+
     def get_midi_notes(self, game_emotional: GameEmotional):
     # Ensure that the game_emotional is an instance of the GameEmotional enum
         if isinstance(game_emotional, GameEmotional):
             emotional_name = game_emotional.name  # Get the name of the emotional state (e.g., 'EXCITEMENT')
-            
+
             # Fetch the corresponding MIDI notes from the emotional_to_midi dictionary
             notes = self.emotional_to_midi.get(game_emotional, [])
-            
+
             # If notes are found, return them; otherwise, handle the "Unknown Genre"
             if notes:
                 return notes
