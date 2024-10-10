@@ -46,7 +46,6 @@ class BeatCraftConfig:
         self.mood = GameMood.JOYFUL.value
         self.emotional = GameEmotional.EXCITEMENT.value
         self.validate_config()
-        print(f" input default emot:{self.emotional}, genre:{self.genre}, mood:{self.mood}")
 
     def validate_config(self):
         # If output_dir is None or doesn't exist, create it
@@ -60,8 +59,8 @@ class BeatCraftConfig:
         if self.file_name is None:
             self.file_name = get_current_time()
 
-        print(f"validating config output_dir {self.output_dir}")
-        print(f"validating config default_file_name {self.file_name}")
+        # print(f"validating config output_dir {self.output_dir}")
+        # print(f"validating config default_file_name {self.file_name}")
 
     def get_output_dir(self):
         return self.output_dir

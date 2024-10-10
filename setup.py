@@ -1,12 +1,17 @@
 from setuptools import setup, find_packages
 
-setup(name="beatCraftSdk",
-      version="0.0.1",
+with open("README.md") as fh:
+    long_description = fh.read()
+
+setup(name="beatcraft",
+      version="1.1.5",
       author="Arul and friends",
       author_email="arif.akbarul@amikom.ac.id",
-      description="while you are focus on the game logic, "
+      description="While you are focus on the game logic, "
                   "BeatCraft help you to make an authentic music for your game",
-      url="",
+      long_description=long_description,
+      long_description_content_type="text/markdown",
+      url="https://github.com/omayib/BeatCraft/wiki",
       packages=find_packages(),
       install_requires=[
         'click',

@@ -24,7 +24,6 @@ class BeatCraft:
     def compose_melody(self):
         notes = self.melody_engine.generate(self.config.get_output_dir(),self.config.get_file_name(), self.config.get_midi_notes(self.config.get_game_emotional()))
         self.melody_engine.evaluate(self.config.get_output_dir(),self.config.get_file_name())
-        print(f"notes in core generate music {notes}")
         return notes
 
     def melody_to_midi(self, generated_notes=None):
@@ -55,8 +54,8 @@ class BeatCraft:
 
         # Save the MIDI file
         output_path = f"{self.config.get_output_dir()}/{self.config.get_file_name()}.mid"
-        print(f"output_path {output_path} ")
         mid.save(output_path)
+        return output_path
 
     def play_generated_music(self, path):
         pygame.mixer.init()
