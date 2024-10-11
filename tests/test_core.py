@@ -1,4 +1,6 @@
+import itertools
 import os.path
+import random
 import unittest
 
 from beat_craft_sdk.config import BeatCraftConfig
@@ -6,6 +8,8 @@ from beat_craft_sdk.core import BeatCraft
 from beat_craft_sdk.crafting_with_backingtrack import CraftingBackingTrack
 from beat_craft_sdk.utils.audio_converter import AudioConverter
 from beat_craft_sdk.config import GameMood, GameEmotional, GameGenre
+from playground import combination
+
 
 class TestBeatCraftSdk(unittest.TestCase):
 
@@ -58,12 +62,13 @@ class TestBeatCraftSdk(unittest.TestCase):
         sdk.melody_to_midi(notes)
         self.assertTrue(os.path.exists(f"{btconfig.get_output_dir()}/{btconfig.get_file_name()}.mid"))
     def test_generate_melody_controlled_input(self):
-        btconfig = BeatCraftConfig(output_dir="./../.outputr", file_name='semut3')
+        btconfig = BeatCraftConfig(output_dir="./../.outputr", file_name='semut13')
         sdk = BeatCraft(btconfig)
+        sdk.set_melody_engine(CraftingBackingTrack())
 
-        btconfig.set_game_mood(GameMood.JOYFUL)
-        btconfig.set_game_genre(GameGenre.ACTION)
-        btconfig.set_game_emotional(GameEmotional.EXCITEMENT)
+        btconfig.set_game_mood(GameMood.TENSE)
+        btconfig.set_game_genre(GameGenre.Horror)
+        btconfig.set_game_emotional(GameEmotional.FEAR)
 
         notes = sdk.compose_melody()
         sdk.melody_to_midi(notes)
@@ -77,7 +82,33 @@ class TestBeatCraftSdk(unittest.TestCase):
         sdk.generate_rythm(sdk.get_config().get_file_name())
 
         pass
+    def test_generate_melody_controlled_input_combination(self):
+        btconfig = BeatCraftConfig(output_dir="./../.outputc", file_name='semut13')
+        sdk = BeatCraft(btconfig)
 
+        combinations_population = itertools.product(GameGenre,GameMood,GameEmotional)
+
+        combinations = list(combinations_population)
+        random_10_combinations = random.sample(combinations, 30)
+
+        for genre, mood, emotional in random_10_combinations:
+            new_file_name = f"{genre}-{mood}-{emotional}"
+            btconfig.set_file_name(new_file_name)
+            btconfig.set_game_mood(mood)
+            btconfig.set_game_genre(genre)
+            btconfig.set_game_emotional(emotional)
+
+            notes = sdk.compose_melody()
+            sdk.melody_to_midi(notes)
+            sdk.play_generated_music(btconfig.get_midi_path())
+
+            conv = AudioConverter(btconfig.get_midi_path(),
+                                  f"{btconfig.get_output_dir()}/{btconfig.get_file_name()}.wav")
+            conv.midi_to_wav()
+
+            sdk.generate_rythm(sdk.get_config().get_file_name())
+
+        pass
     def test_sdk_play_midi_generated(self):
         config = BeatCraftConfig(output_dir="../.outputf", file_name='merbabu')
         sdk = BeatCraft(config)
