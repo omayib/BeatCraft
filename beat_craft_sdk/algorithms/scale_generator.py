@@ -1,6 +1,7 @@
 import random
 
-from beat_craft_sdk.evaluation.beat_craft_evaluation import population_diversity, fitness_consonance, classify_scale
+from beat_craft_sdk.evaluation.beat_craft_evaluation import population_diversity, fitness_consonance, classify_scale, \
+    combined_fitness
 
 # Define the A minor scale using MIDI numbers
 # A_minor_scale_midi = [0, 57, 59, 60, 62, 64, 65, 67]  # A, B, C, D, E, F, G
@@ -45,13 +46,14 @@ def mutate(sequence, mutation_rate=0.1,scale=None):
 # Main genetic algorithm
 def generate_scale_with_genetic_algorithm(num_item=4, scale=None):
     population = initialize_population(population_size, num_item, scale)
-    print(f"population initial {population}")
+
     best_fitness_per_generation = []  # To store the best fitness of each generation
     diversity_per_generation = []     # To store the diversity of each generation (genotypic)
     scale_type = classify_scale(scale)
     for generation in range(num_generations):
         # Evaluate fitness of each sequence
-        fitness_scores = [fitness_consonance(sequence, scale_type) for sequence in population]
+        # fitness_scores = [fitness_consonance(sequence, scale_type) for sequence in population]
+        fitness_scores = [combined_fitness(sequence, scale_type) for sequence in population]
 
         best_fitness = max(fitness_scores)
         best_fitness_per_generation.append(best_fitness)
@@ -77,7 +79,7 @@ def generate_scale_with_genetic_algorithm(num_item=4, scale=None):
         # print(f"Generation {generation + 1}: Best fitness: {best_fitness}, Diversity: {diversity}")
 
     # Return the best sequence
-    best_sequence = max(population, key=lambda seq: fitness_consonance(seq,scale_type))
+    best_sequence = max(population, key=lambda seq: combined_fitness(seq,scale_type))
     return best_sequence, best_fitness_per_generation, diversity_per_generation
 
 
