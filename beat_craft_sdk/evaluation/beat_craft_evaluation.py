@@ -53,11 +53,11 @@ def fitness_rhythmic_variety(sequence):
     variety = len(set(sequence)) / len(sequence)
     return variety
 
-def combined_fitness(sequence):
+def combined_fitness(sequence,scale_type):
     smoothness_score = fitness_smoothness(sequence)
-    consonance_score = fitness_consonance(sequence,"")
+    consonance_score = fitness_consonance(sequence,scale_type)
     variety_score = fitness_rhythmic_variety(sequence)
-    return 0.4 * smoothness_score + 0.4 * consonance_score + 0.2 * variety_score
+    return 0.3 * smoothness_score + 0.5 * consonance_score + 0.2 * variety_score
 
 # Hamming distance to measure genotypic diversity
 def hamming_distance(seq1, seq2):
