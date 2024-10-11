@@ -75,8 +75,9 @@ class BeatCraft:
     def generate_rythm(self,melody_file_name):
         audio_melody_path = f"{self.config.get_output_dir()}/{melody_file_name}.wav"
         model = MusicGen.get_pretrained('melody')
-        model.set_generation_params(duration=8)  # generate 8 seconds.
-        desc = f"{self.config.get_game_emotional()} {self.config.get_game_mood()}"
+        model.set_generation_params(duration=30)  # generate 8 seconds.
+        desc = f"{self.config.get_game_genre()} {self.config.get_game_mood()}"
+        print(f"desc to generate {desc}")
         descriptions = [desc]
 
         melody, sr = torchaudio.load(audio_melody_path)
