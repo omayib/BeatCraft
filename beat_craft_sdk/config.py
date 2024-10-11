@@ -202,8 +202,6 @@ class BeatCraftConfig:
     def __init__(self,output_dir=None, file_name=None):
         self.output_dir = output_dir
         self.file_name = file_name
-        self.path_midi_file = ''
-        self.path_wav_file = ''
         self.genre = GameGenre.ACTION.value
         self.mood = GameMood.JOYFUL.value
         self.emotional = GameEmotional.EXCITEMENT.value
@@ -223,12 +221,26 @@ class BeatCraftConfig:
 
         # print(f"validating config output_dir {self.output_dir}")
         # print(f"validating config default_file_name {self.file_name}")
+    def set_file_name(self, file_name):
+        self.file_name = file_name
 
     def get_output_dir(self):
         return self.output_dir
 
     def get_file_name(self):
         return self.file_name
+
+    def get_midi_path(self):
+        midi_path = f"{self.output_dir}/{self.file_name}.mid"
+        if not os.path.exists(midi_path):
+            raise FileNotFoundError(f"The file {midi_path} does not exist.")
+        return midi_path
+
+    def get_wav_path(self):
+        wav_path = f"{self.output_dir}/{self.file_name}.wav"
+        if not os.path.exists(wav_path):
+            raise FileNotFoundError(f"The file {wav_path} does not exist.")
+        return wav_path
 
     def set_game_genre(self,game_genre:GameGenre):
         self.genre = game_genre.value
