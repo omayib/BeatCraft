@@ -36,7 +36,7 @@ def crossover(parent1, parent2):
 
 
 # Mutation function: Mutates a sequence
-def mutate(sequence, mutation_rate=0.1,scale=None):
+def mutate(sequence, mutation_rate=0.25,scale=None):
     for i in range(len(sequence)):
         if random.random() < mutation_rate:
             sequence[i] = random.choice(scale)
