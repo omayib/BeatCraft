@@ -16,3 +16,5 @@ xformers==0.0.22.post7
 audiocraft==1.3.0
 midi2audio
 librosa
+pyAudioAnalysis
+eyed3

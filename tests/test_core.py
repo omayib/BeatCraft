@@ -6,6 +6,7 @@ import unittest
 from beat_craft_sdk.config import BeatCraftConfig
 from beat_craft_sdk.core import BeatCraft
 from beat_craft_sdk.crafting_with_backingtrack import CraftingBackingTrack
+from beat_craft_sdk.evaluation.beat_craft_evaluation import feature_extraction
 from beat_craft_sdk.utils.audio_converter import AudioConverter
 from beat_craft_sdk.config import GameMood, GameEmotional, GameGenre
 from playground import combination
@@ -83,13 +84,13 @@ class TestBeatCraftSdk(unittest.TestCase):
 
         pass
     def test_generate_melody_controlled_input_combination(self):
-        btconfig = BeatCraftConfig(output_dir="./../.outputc", file_name='semut13')
+        btconfig = BeatCraftConfig(output_dir="./../.outputd", file_name='semut13')
         sdk = BeatCraft(btconfig)
 
         combinations_population = itertools.product(GameGenre,GameMood,GameEmotional)
 
         combinations = list(combinations_population)
-        random_10_combinations = random.sample(combinations, 30)
+        random_10_combinations = random.sample(combinations, 3)
 
         for genre, mood, emotional in random_10_combinations:
             new_file_name = f"{genre}-{mood}-{emotional}"
@@ -126,6 +127,10 @@ class TestBeatCraftSdk(unittest.TestCase):
         sdk.generate_rythm(sdk.get_config().get_file_name())
 
     def test_genetic_fitness_over_generation(self):
+        pass
+
+    def test_feature_extraction(self):
+        feature_extraction("../.outputd/0_2024-10-11_17-01-39_GameGenre.RPG-GameMood.SERENE-GameEmotional.FEAR.wav","../.outputd")
         pass
 if __name__ == '__main__':
     unittest.main()

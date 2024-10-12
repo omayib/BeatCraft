@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 import os
+
+from pyAudioAnalysis.ShortTermFeatures import spectral_entropy
+
 from beat_craft_sdk.utils.beat_craft_utils import get_current_time
 import numpy as np
 import librosa
@@ -246,3 +249,141 @@ def plot_audio_analyze_into_json(x_label,x_data,y_label,y_data,output_dir,file_n
     # Save to a JSON file
     with open(output_path, 'w') as json_file:
         json.dump(data, json_file, indent=4)
+def plot_audio_analyze_multifeature_into_json(x_label,x_data,y_label,y_data,output_dir,file_name):
+    filename = f"audio_analyze_{get_current_time()}_{file_name}.json"
+    output_path = os.path.join(output_dir, filename)
+    data = {
+        f"{x_label}": json.dumps(x_data.tolist()),
+        f"{y_label}": json.dumps(y_data)
+    }
+    # Save to a JSON file
+    with open(output_path, 'w') as json_file:
+        json.dump(data, json_file, indent=4)
+from pyAudioAnalysis import ShortTermFeatures, audioBasicIO
+import numpy as np
+import librosa
+
+def feature_extraction(wav_file, output_dir):
+    [fs, x] = audioBasicIO.read_audio_file(wav_file)
+    features, feature_names = ShortTermFeatures.feature_extraction(x, fs, 0.050 * fs, 0.050 * fs)
+    feature_values = {name: features[i, 0] for i, name in enumerate(feature_names)}
+    zcr_values = features[0, :]
+    energy_values = features[1, :]
+    energy_entropy_values = features[2, :]
+    spectral_centroid_values = features[3, :]
+    spectral_spread_values = features[4, :]
+    spectral_entropy_values = features[5, :]
+    mfcc_values = []
+    chroma_values = []
+
+    hop_size = 0.050  # 50 ms step, in seconds
+    x_values = np.arange(features.shape[1]) * hop_size
+
+    # plot each feature
+    for index, (name, value) in enumerate(feature_values.items()):
+        if value == 0:
+            continue  # Skip this iteration if the value is 0
+        print(f"{index}: {name}: {value}")
+
+        filename = f"featureextraction-{feature_names[index]}.png"
+        output_path = os.path.join(output_dir, filename)
+
+        y_values = features[index, :]
+
+        plot_audio_analyze_into_json('Time (frames)',
+                                     x_values,
+                                     f"{feature_names[index]}",
+                                     y_values,
+                                     output_dir,
+                                     filename)
+
+        if name.startswith("mfcc_"):
+            mfcc_values.append(features[index, :])
+        if name.startswith("chroma_"):
+            chroma_values.append(features[index, :])
+        plt.clf()
+        plt.plot(x_values,y_values,label=feature_names[index])
+        plt.xlabel('Frame no')
+        plt.ylabel('Feature value')
+        plt.legend()
+        plt.savefig(output_path)
+
+    # plot multiple features
+    plot_multiple_features("zcr",
+                           zcr_values,
+                           "energy",
+                           energy_values,
+                           x_values,output_dir)
+    plot_multiple_features("spectral_centroid",
+                           spectral_centroid_values,
+                           "spectral_spread",
+                           spectral_spread_values,
+                           x_values,output_dir)
+    plot_multiple_features("energy_entropy",
+                           energy_entropy_values,
+                           "spectral_entropy",
+                           spectral_entropy_values,
+                           x_values,output_dir)
+
+    plot_features_chroma_or_mfcc("energy",
+                           energy_values,
+                           "MFCC",
+                           mfcc_values,
+                           x_values,output_dir)
+
+
+    plot_features_chroma_or_mfcc("energy",
+                           energy_values,
+                           "Chroma",
+                           chroma_values,
+                           x_values,output_dir)
+
+def plot_multiple_features(feature1_name,feature1_values,feature2_name,feature2_values,time_values,output_dir):
+    filename = f"featureextraction-{feature1_name}-vs-{feature2_name}.png"
+    output_path = os.path.join(output_dir, filename)
+    y1_values = feature1_values
+    y2_values = feature2_values
+    plt.clf()
+    plt.plot(time_values, y1_values, label=feature1_name)
+    plt.plot(time_values, y2_values, label=feature2_name)
+    plt.xlabel('Frame no')
+    plt.ylabel('Feature value')
+    plt.title('Feature Comparison Over Time')
+    plt.legend()
+    plt.savefig(output_path)
+    features_values = create_json_feature_structure(time_values,feature1=feature1_values,feature2=feature2_values)
+    plot_audio_analyze_multifeature_into_json('Time (frames)',
+                                 time_values,
+                                 f"{feature1_name} and {feature2_name}",
+                                 features_values,
+                                 output_dir,
+                                 filename)
+
+def plot_features_chroma_or_mfcc(feature1_name,feature1_values,feature2_name,feature2_values,time_values,output_dir):
+    if not feature2_values :
+        return
+    filename = f"featureextraction_chromaormfcc_-{feature1_name}-vs-{feature2_name}.png"
+    output_path = os.path.join(output_dir, filename)
+    y1_values = feature1_values
+    y2_values = feature2_values
+    plt.clf()
+    plt.plot(time_values, y1_values, label=feature1_name)
+    for i, y in enumerate(y2_values):
+        plt.plot(time_values, y, label=feature2_name)
+    plt.xlabel('Frame no')
+    plt.ylabel('Feature value')
+    plt.title('Feature Comparison Over Time')
+    plt.legend()
+    plt.savefig(output_path)
+def create_json_feature_structure(time, **features):
+    # Convert time to a list if it's a NumPy array
+    if isinstance(time, np.ndarray):
+        time = time.tolist()
+
+    # Create the dictionary structure and convert each feature to a list if needed
+    result = {
+        "time": time,
+        "feature": {name: (values.tolist() if isinstance(values, np.ndarray) else values)
+                    for name, values in features.items()}
+    }
+    return result  # Return the dictionary directly
