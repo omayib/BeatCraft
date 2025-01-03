@@ -1,4 +1,5 @@
-from beat_craft_sdk.config import BeatCraftConfig
+from beat_craft_sdk.config import BeatCraftConfig, TransformerConfig
+from beat_craft_sdk.crafting_with_transformer import CraftingTransformer
 from beat_craft_sdk.crafting_with_genetic import CraftingGenetic
 import mido
 from mido import MidiFile, MidiTrack, Message
@@ -21,10 +22,17 @@ class BeatCraft:
     def set_melody_engine(self, melody_engine):
         self.melody_engine = melody_engine
 
-    def compose_melody(self):
-        notes = self.melody_engine.generate(self.config.get_output_dir(),self.config.get_file_name(), self.config.get_midi_notes(self.config.get_game_emotional()))
-        self.melody_engine.evaluate(self.config.get_output_dir(),self.config.get_file_name())
-        return notes
+    def compose_melody(self, game_mood=None, game_genre=None, game_emotional=None):
+    # Periksa apakah melody_engine adalah instance dari CraftingTransformer
+        if isinstance(self.melody_engine, CraftingTransformer):
+            notes, decoded_music = self.melody_engine.generate(self.config.get_output_dir(), self.config.get_file_name(), self.config.get_game_emotional())
+            results, summary = self.melody_engine.evaluate(decoded_music, notes, self.config.get_output_dir(), self.config.get_file_name(), 
+                                        game_mood=game_mood, game_genre=game_genre, game_emotional=game_emotional)
+        else:
+            notes = self.melody_engine.generate(self.config.get_output_dir(), self.config.get_file_name(), self.config.get_midi_notes(self.config.get_game_emotional()))
+            self.melody_engine.evaluate(self.config.get_output_dir(), self.config.get_file_name())
+            results, summary = []
+        return notes, results, summary
 
     def melody_to_midi(self, generated_notes=None):
         mid = MidiFile()
@@ -65,7 +73,6 @@ class BeatCraft:
         while pygame.mixer.music.get_busy():
             pass
     def generate_rythm(self,melody_file_name):
-
         audio_melody_path = f"{self.config.get_output_dir()}/{melody_file_name}.wav"
         model = MusicGen.get_pretrained('melody')
         model.set_generation_params(duration=8)  # generate 8 seconds.

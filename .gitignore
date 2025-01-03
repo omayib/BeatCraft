@@ -8,3 +8,9 @@ dist/
 *.egg-info/
 *.egg
 sdk_usage/
+transformer_output/
+__pycache__/
+beat_craft_sdk/algorithms/transformers_config/
+tes.ipynb
+constrains.txt
+gpt2_checkpoints/*
