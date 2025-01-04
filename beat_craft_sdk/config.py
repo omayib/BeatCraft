@@ -244,18 +244,21 @@ class BeatCraftConfig:
 
     def set_game_genre(self,game_genre:GameGenre):
         self.genre = game_genre.value
+        print(f"genre {self.genre}")
 
     def get_game_genre(self):
         return self.genre
 
     def set_game_mood(self,game_mood:GameMood):
         self.mood=game_mood.value
+        print(f"mood {self.mood}")
 
     def get_game_mood(self):
         return self.mood
 
     def set_game_emotional(self,game_emotional:GameEmotional):
         self.emotional = game_emotional.value
+        print(f"genre {self.emotional}")
 
     def get_game_emotional(self):
         return self.emotional

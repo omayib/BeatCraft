@@ -38,11 +38,11 @@ valid_combinations = []
 find_combinations([], 0, 0)
 
 # Display the valid combinations
-for combination in valid_combinations:
-    print(combination)
+# for combination in valid_combinations:
+    # print(combination)
 
 # Optional: Print the total number of valid combinations found
-print(f"Total valid combinations: {len(valid_combinations)}")
+# print(f"Total valid combinations: {len(valid_combinations)}")
 
 strong_beats = [0, 1, 2, 3]  # Downbeats
 weak_beats = [0.5, 1.5, 2.5, 3.5]  # Off-beats
@@ -95,7 +95,7 @@ def write_midi(beat_duration_pairs, filename='output.mid', tempo_bpm=120):
 
     # Save the MIDI file
     mid.save(filename)
-    print(f"MIDI file saved as {filename}")
+    # print(f"MIDI file saved as {filename}")
 
 # Define the metric weights for a 4/4 measure
 metric_weights = {
@@ -146,15 +146,15 @@ def find_next_strong_beat(current_beat):
     # If no strong beat is found ahead, assume the measure wraps around (next measure)
     return strong_beats[0] + 4
 
-selected_duration = random.choice(valid_combinations)
-# selected_duration = [0.25, 0.25, 0.25, 0.25, 0.25, 0.5, 0.25, 2]
-print(f"selected {selected_duration}")
-beat_duration_pairs = generate_beat_duration_pairs(selected_duration)
-print(f"beat_duration_pairs {beat_duration_pairs}")
-syncopation_score = calculate_syncopation_gomez_naveda(beat_duration_pairs)
-print(f"syncopation_score {syncopation_score}")
-write_midi(beat_duration_pairs, filename='rhythm_pattern.mid', tempo_bpm=120)
-
-for beat, duration in beat_duration_pairs:
-    next_strong_beat = find_next_strong_beat(beat % 4)
-    print(f"beat {beat}, duration {duration}, next_strong_beat {next_strong_beat}")
+# selected_duration = random.choice(valid_combinations)
+# # selected_duration = [0.25, 0.25, 0.25, 0.25, 0.25, 0.5, 0.25, 2]
+# print(f"selected {selected_duration}")
+# beat_duration_pairs = generate_beat_duration_pairs(selected_duration)
+# print(f"beat_duration_pairs {beat_duration_pairs}")
+# syncopation_score = calculate_syncopation_gomez_naveda(beat_duration_pairs)
+# print(f"syncopation_score {syncopation_score}")
+# write_midi(beat_duration_pairs, filename='rhythm_pattern.mid', tempo_bpm=120)
+#
+# for beat, duration in beat_duration_pairs:
+#     next_strong_beat = find_next_strong_beat(beat % 4)
+#     print(f"beat {beat}, duration {duration}, next_strong_beat {next_strong_beat}")

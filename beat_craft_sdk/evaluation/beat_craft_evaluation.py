@@ -7,6 +7,9 @@ from beat_craft_sdk.utils.beat_craft_utils import get_current_time
 import numpy as np
 import librosa
 import json
+from pyAudioAnalysis import ShortTermFeatures, audioBasicIO
+import numpy as np
+import librosa
 
 def fitness_smoothness(sequence):
     total_jump = sum(abs(sequence[i] - sequence[i + 1]) for i in range(len(sequence) - 1))
@@ -60,7 +63,7 @@ def combined_fitness(sequence,scale_type):
     smoothness_score = fitness_smoothness(sequence)
     consonance_score = fitness_consonance(sequence,scale_type)
     variety_score = fitness_rhythmic_variety(sequence)
-    return 0.3 * smoothness_score + 0.5 * consonance_score + 0.2 * variety_score
+    return 0.2 * smoothness_score + 0.7 * consonance_score + 0.1 * variety_score
 
 # Hamming distance to measure genotypic diversity
 def hamming_distance(seq1, seq2):
@@ -259,9 +262,7 @@ def plot_audio_analyze_multifeature_into_json(x_label,x_data,y_label,y_data,outp
     # Save to a JSON file
     with open(output_path, 'w') as json_file:
         json.dump(data, json_file, indent=4)
-from pyAudioAnalysis import ShortTermFeatures, audioBasicIO
-import numpy as np
-import librosa
+
 
 def feature_extraction(wav_file, output_dir):
     [fs, x] = audioBasicIO.read_audio_file(wav_file)
@@ -275,6 +276,7 @@ def feature_extraction(wav_file, output_dir):
     spectral_entropy_values = features[5, :]
     mfcc_values = []
     chroma_values = []
+    wavfilename = os.path.basename(wav_file)
 
     hop_size = 0.050  # 50 ms step, in seconds
     x_values = np.arange(features.shape[1]) * hop_size
@@ -285,7 +287,7 @@ def feature_extraction(wav_file, output_dir):
             continue  # Skip this iteration if the value is 0
         print(f"{index}: {name}: {value}")
 
-        filename = f"featureextraction-{feature_names[index]}.png"
+        filename = f"features-{wavfilename}-{feature_names[index]}.png"
         output_path = os.path.join(output_dir, filename)
 
         y_values = features[index, :]
@@ -313,17 +315,17 @@ def feature_extraction(wav_file, output_dir):
                            zcr_values,
                            "energy",
                            energy_values,
-                           x_values,output_dir)
+                           x_values,output_dir,wavfilename)
     plot_multiple_features("spectral_centroid",
                            spectral_centroid_values,
                            "spectral_spread",
                            spectral_spread_values,
-                           x_values,output_dir)
+                           x_values,output_dir,wavfilename)
     plot_multiple_features("energy_entropy",
                            energy_entropy_values,
                            "spectral_entropy",
                            spectral_entropy_values,
-                           x_values,output_dir)
+                           x_values,output_dir,wavfilename)
 
     plot_features_chroma_or_mfcc("energy",
                            energy_values,
@@ -338,8 +340,27 @@ def feature_extraction(wav_file, output_dir):
                            chroma_values,
                            x_values,output_dir)
 
-def plot_multiple_features(feature1_name,feature1_values,feature2_name,feature2_values,time_values,output_dir):
-    filename = f"featureextraction-{feature1_name}-vs-{feature2_name}.png"
+
+def save_features_to_json(features,output_dir, file_name="features.json"):
+    # Convert features (which is a NumPy array) to a dictionary
+    filename = f"feature-all-{file_name}.json"
+    output_path = os.path.join(output_dir, filename)
+
+    feature_dict = {}
+
+    # Loop through feature names and assign corresponding feature values from the array
+    for index, (name, value) in enumerate(features.items()):
+        # Extract the i-th feature column (axis 0) and convert it to a list
+        print(f"{index}: {name}: {value}")
+        feature_dict[name] = value
+
+    # Save the feature dictionary to a JSON file
+    with open(output_path, 'w') as json_file:
+        json.dump(feature_dict, json_file, indent=4)
+
+
+def plot_multiple_features(feature1_name,feature1_values,feature2_name,feature2_values,time_values,output_dir, wavfilename):
+    filename = f"feature-{feature1_name}-vs-{feature2_name}-{wavfilename}.png"
     output_path = os.path.join(output_dir, filename)
     y1_values = feature1_values
     y2_values = feature2_values

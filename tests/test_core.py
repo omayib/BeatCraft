@@ -9,7 +9,6 @@ from beat_craft_sdk.crafting_with_backingtrack import CraftingBackingTrack
 from beat_craft_sdk.evaluation.beat_craft_evaluation import feature_extraction
 from beat_craft_sdk.utils.audio_converter import AudioConverter
 from beat_craft_sdk.config import GameMood, GameEmotional, GameGenre
-from playground import combination
 
 
 class TestBeatCraftSdk(unittest.TestCase):
@@ -84,15 +83,19 @@ class TestBeatCraftSdk(unittest.TestCase):
 
         pass
     def test_generate_melody_controlled_input_combination(self):
-        btconfig = BeatCraftConfig(output_dir="./../.outputd", file_name='semut13')
+        btconfig = BeatCraftConfig(output_dir="./../.output3", file_name='semut')
         sdk = BeatCraft(btconfig)
 
-        combinations_population = itertools.product(GameGenre,GameMood,GameEmotional)
+        combinations = [
+            (GameGenre.RPG, GameMood.RELAXING, GameEmotional.CHALLENGE),
+            (GameGenre.RPG, GameMood.EPIC, GameEmotional.FEAR),
+            (GameGenre.Puzzle, GameMood.JOYFUL, GameEmotional.EXCITEMENT),
+            (GameGenre.Puzzle, GameMood.JOYFUL, GameEmotional.CHALLENGE),
+            (GameGenre.ACTION, GameMood.JOYFUL, GameEmotional.CHALLENGE),
+            (GameGenre.ACTION, GameMood.TENSE, GameEmotional.FEAR)
+        ]
 
-        combinations = list(combinations_population)
-        random_10_combinations = random.sample(combinations, 3)
-
-        for genre, mood, emotional in random_10_combinations:
+        for genre, mood, emotional in combinations:
             new_file_name = f"{genre}-{mood}-{emotional}"
             btconfig.set_file_name(new_file_name)
             btconfig.set_game_mood(mood)

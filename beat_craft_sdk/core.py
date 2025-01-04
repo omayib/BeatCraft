@@ -8,9 +8,10 @@ import os
 import torchaudio
 from audiocraft.models import MusicGen
 from audiocraft.data.audio import audio_write
+import threading
 
 from beat_craft_sdk.evaluation.beat_craft_evaluation import plot_mel_spectrogram, plot_waveform, plot_spectrogram, plot_pitch_contour, \
-    load_audio_file
+    load_audio_file, feature_extraction
 from beat_craft_sdk.utils.beat_craft_utils import get_current_time
 
 
@@ -97,6 +98,8 @@ class BeatCraft:
             plot_mel_spectrogram(audio_data,sample_rate,self.config.get_output_dir(), self.config.get_file_name())
             plot_waveform(audio_data, sample_rate, self.config.get_output_dir(), self.config.get_file_name())
             plot_spectrogram(audio_data, sample_rate, self.config.get_output_dir(), self.config.get_file_name())
-
+            # feature_extraction(f"{output_path}.wav",self.config.get_output_dir())
+            thread = threading.Thread(target=feature_extraction, args=(f"{output_path}.wav", self.config.get_output_dir()))
+            thread.start()
     def get_config(self):
         return self.config
