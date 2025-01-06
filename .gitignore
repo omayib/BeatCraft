@@ -5,6 +5,8 @@
 .output2
 .output3
 */__pycache__/*
+*/*/__pycache__/*
+__pycache__/
 build/
 dist/
 *.egg-info/
