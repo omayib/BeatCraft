@@ -2,6 +2,8 @@
 .idea
 .idea/workspace.xml
 .output
+.output2
+.output3
 */__pycache__/*
 build/
 dist/
@@ -14,3 +16,5 @@ beat_craft_sdk/algorithms/transformers_config/
 # tes.ipynb
 constrains.txt
 gpt2_checkpoints/*
+
+tests
