@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BeatCraft — Music for your game</title>
+  <meta name="description" content="While you focus on your game's logic, BeatCraft helps you create authentic music for your game. A Python SDK for mood-, genre- and emotion-aware melody and soundtrack generation.">
+  <meta property="og:title" content="BeatCraft — Music for your game">
+  <meta property="og:description" content="A Python SDK that composes game music from mood, genre and emotion.">
+  <meta property="og:image" content="https://omayib.github.io/BeatCraft/assets/images/beatcraft.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/images/beatcraft.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f3a;
+      --bg-2: #121857;
+      --surface: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #eef0ff;
+      --muted: #a9aed8;
+      --teal: #2bb3b1;
+      --orange: #f5a524;
+      --red: #e8455a;
+      --code-bg: #05071f;
+      --radius: 14px;
+      --max: 1080px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Outfit", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 92% 8%, rgba(232, 69, 90, 0.35), transparent 30%),
+        radial-gradient(circle at 5% 40%, rgba(43, 179, 177, 0.18), transparent 30%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      background-attachment: fixed;
+      line-height: 1.6;
+    }
+    a { color: var(--teal); }
+    img { max-width: 100%; display: block; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(11, 15, 58, 0.7);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: 0.04em; color: var(--text); text-decoration: none; }
+    .brand img { width: 32px; height: 32px; border-radius: 8px; }
+    nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+    nav ul a { color: var(--muted); text-decoration: none; font-weight: 600; }
+    nav ul a:hover { color: var(--text); }
+    @media (max-width: 640px) { nav ul li:not(:last-child) { display: none; } }
+
+    /* Hero */
+    .hero { padding: 72px 0 56px; }
+    .hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+    .eyebrow { color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.85rem; }
+    h1 { font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.05; margin: 12px 0 18px; font-weight: 800; }
+    h1 span { background: linear-gradient(90deg, var(--teal), var(--orange), var(--red)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { color: var(--muted); font-size: 1.2rem; max-width: 34em; }
+    .hero-art img { border-radius: 24px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45); }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px; font-weight: 600; text-decoration: none; border: 1px solid var(--border); color: var(--text); transition: transform .15s ease, background .15s ease; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn.primary { background: var(--teal); border-color: var(--teal); color: #04122a; }
+    .btn.ghost:hover { background: var(--surface); }
+    .install { margin-top: 24px; display: inline-flex; align-items: center; gap: 12px; background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 10px 10px 16px; font-family: "JetBrains Mono", monospace; max-width: 100%; }
+    .install code { white-space: nowrap; overflow-x: auto; }
+    .install code::before { content: "$ "; color: var(--orange); }
+    .copy { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; cursor: pointer; font: inherit; font-size: 0.8rem; }
+    .copy:hover { background: rgba(255,255,255,0.12); }
+    @media (max-width: 860px) {
+      .hero .wrap { grid-template-columns: 1fr; }
+      .hero-art { order: -1; max-width: 360px; }
+    }
+
+    /* Sections */
+    section { padding: 64px 0; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 0 0 12px; }
+    .section-lead { color: var(--muted); max-width: 40em; margin: 0 0 36px; }
+    .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .card h3 { margin: 10px 0 6px; font-size: 1.2rem; }
+    .card p { margin: 0; color: var(--muted); }
+    .icon { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; font-size: 1.3rem; }
+    .i-teal { background: rgba(43,179,177,.18); }
+    .i-orange { background: rgba(245,165,36,.18); }
+    .i-red { background: rgba(232,69,90,.18); }
+
+    /* Demo */
+    .demo { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+    .demo img { border-radius: var(--radius); border: 1px solid var(--border); }
+    @media (max-width: 860px) { .demo { grid-template-columns: 1fr; } }
+
+    /* Steps / code */
+    .steps { counter-reset: step; display: grid; gap: 28px; }
+    .step h3 { display: flex; align-items: center; gap: 12px; margin: 0 0 10px; }
+    .step h3::before { counter-increment: step; content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--orange); color: #1a1030; font-weight: 800; flex: none; }
+    .step p { color: var(--muted); margin: 0 0 12px; }
+    pre { margin: 0; background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; overflow-x: auto; font-family: "JetBrains Mono", monospace; font-size: 0.9rem; line-height: 1.55; }
+    .k { color: #c792ea; } .s { color: #c3e88d; } .f { color: #82aaff; } .c { color: #6b7199; font-style: italic; } .n { color: #f78c6c; }
+
+    /* Tables */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    th { color: var(--orange); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    tr:last-child td { border-bottom: none; }
+    td code { font-family: "JetBrains Mono", monospace; color: var(--teal); font-size: 0.88rem; }
+    .param-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .param-grid h3 { margin: 0 0 10px; }
+
+    /* Listen */
+    .listen { text-align: center; background: linear-gradient(135deg, rgba(43,179,177,.15), rgba(232,69,90,.15)); border: 1px solid var(--border); border-radius: 24px; padding: 48px 24px; }
+    .listen p { color: var(--muted); max-width: 36em; margin: 0 auto 24px; }
+    .listen .cta { justify-content: center; }
+
+    footer { border-top: 1px solid var(--border); padding: 32px 0; color: var(--muted); font-size: 0.95rem; }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#">
+        <picture>
+          <source srcset="assets/images/beatcraft.webp" type="image/webp">
+          <img src="assets/images/beatcraft.png" alt="" width="32" height="32">
+        </picture>
+        BEATCRAFT
+      </a>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#quickstart">Quickstart</a></li>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="https://github.com/omayib/BeatCraft">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Python SDK · Game audio</div>
+        <h1>Authentic music for your game, <span>crafted in code.</span></h1>
+        <p class="lead">While you focus on your game's logic, BeatCraft composes melodies and full soundtracks that match your game's genre, mood and emotion.</p>
+        <div class="install">
+          <code id="pip">pip install beatcraft</code>
+          <button class="copy" data-copy="pip install beatcraft">Copy</button>
+        </div>
+        <div class="cta">
+          <a class="btn primary" href="#quickstart">Get started</a>
+          <a class="btn ghost" href="https://github.com/omayib/BeatCraft">View on GitHub</a>
+          <a class="btn ghost" href="https://pypi.org/project/beatcraft/">PyPI</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <picture>
+          <source srcset="assets/images/beatcraft.webp" type="image/webp">
+          <img src="assets/images/beatcraft.png" alt="BeatCraft: pip install beatcraft, compose a melody, set the game genre and play" width="500" height="500">
+        </picture>
+      </div>
+    </div>
+  </header>
+
+  <section id="features">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="section-lead">Pick a melody engine, describe your game, and BeatCraft turns it into MIDI and then a full audio track.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="icon i-teal">🧬</div>
+          <h3>Genetic algorithm</h3>
+          <p>The default engine evolves melodies over generations, scoring phrases against the scale for your game's emotion.</p>
+        </div>
+        <div class="card">
+          <div class="icon i-orange">🎼</div>
+          <h3>Backtracking</h3>
+          <p>A rule-based engine that searches for phrases that fit musical constraints.</p>
+        </div>
+        <div class="card">
+          <div class="icon i-red">🤖</div>
+          <h3>Transformer</h3>
+          <p>A GPT-2 based model that generates melodies in ABC notation, with built-in evaluation and plots.</p>
+        </div>
+        <div class="card">
+          <div class="icon i-teal">🔊</div>
+          <h3>Full soundtrack</h3>
+          <p>Turns your melody into a 30-second track with MusicGen, guided by your game's genre and mood.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap demo">
+      <div>
+        <h2>From install to melody in seconds</h2>
+        <p class="section-lead">Install from PyPI, create the SDK and call <code>compose_melody()</code>. You get back a list of notes, each one a <em>(duration, MIDI pitch)</em> pair, saved as a MIDI file you can play right away.</p>
+      </div>
+      <img src="assets/images/pip-install-beatcraft.gif" alt="Terminal recording: installing BeatCraft with pip and generating a melody" loading="lazy">
+    </div>
+  </section>
+
+  <section id="quickstart">
+    <div class="wrap">
+      <h2>Quickstart</h2>
+      <p class="section-lead">Four steps from an empty script to a finished soundtrack.</p>
+      <div class="steps">
+        <div class="step">
+          <h3>Install</h3>
+          <p>If you hit dependency conflicts, install with a constraints file.</p>
+<pre><span class="c"># constraints.txt</span>
+pandas==2.2.3
+numpy>=1.26.0
+matplotlib==3.9.2
+gradio==4.44.0
+torchmetrics==1.4.2
+encodec==0.1.1
+
+pip install beatcraft -c constraints.txt</pre>
+        </div>
+        <div class="step">
+          <h3>Configure &amp; compose a melody</h3>
+          <p>Describe your game with <code>BeatCraftConfig</code>, then compose.</p>
+<pre><span class="k">from</span> beat_craft_sdk.core <span class="k">import</span> BeatCraft
+<span class="k">from</span> beat_craft_sdk.config <span class="k">import</span> BeatCraftConfig, GameGenre, GameMood, GameEmotional
+
+config = <span class="f">BeatCraftConfig</span>(file_name=<span class="s">'output_bt'</span>)
+config.<span class="f">set_game_genre</span>(GameGenre.ACTION)
+config.<span class="f">set_game_mood</span>(GameMood.TENSE)
+config.<span class="f">set_game_emotional</span>(GameEmotional.FEAR)
+
+sdk = <span class="f">BeatCraft</span>(config)
+notes, results, summary = sdk.<span class="f">compose_melody</span>()
+<span class="c"># [(1, 65), (1, 67), (0.5, 64), (0.25, 67), ...]</span></pre>
+        </div>
+        <div class="step">
+          <h3>Pick an engine (optional)</h3>
+          <p>The genetic algorithm is the default. Swap it for another engine at any time.</p>
+<pre><span class="k">from</span> beat_craft_sdk.crafting_with_backingtrack <span class="k">import</span> CraftingBackingTrack
+<span class="k">from</span> beat_craft_sdk.crafting_with_transformer <span class="k">import</span> CraftingTransformer
+
+sdk.<span class="f">set_melody_engine</span>(<span class="f">CraftingBackingTrack</span>())
+<span class="c"># or: sdk.set_melody_engine(CraftingTransformer())</span>
+notes, results, summary = sdk.<span class="f">compose_melody</span>()</pre>
+        </div>
+        <div class="step">
+          <h3>Listen &amp; generate the full track</h3>
+          <p>Play the MIDI, convert it to WAV, and let BeatCraft build the soundtrack around it.</p>
+<pre><span class="k">from</span> beat_craft_sdk.utils.audio_converter <span class="k">import</span> AudioConverter
+
+sdk.<span class="f">play_generated_music</span>(<span class="s">'../.outputx/output_bt.mid'</span>)
+
+conv = <span class="f">AudioConverter</span>(<span class="s">'../.outputx/output_bt.mid'</span>, <span class="s">'../.outputx/output_bt.wav'</span>)
+conv.<span class="f">midi_to_wav</span>()
+
+sdk.<span class="f">generate_rythm</span>(<span class="s">'output_bt'</span>)  <span class="c"># 30 s track + waveform, spectrogram and pitch plots</span></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="parameters">
+    <div class="wrap">
+      <h2>Describe your game</h2>
+      <p class="section-lead">Three settings shape the music. The emotion picks the musical scale, while genre and mood steer the soundtrack.</p>
+      <div class="param-grid">
+        <div>
+          <h3>GameEmotional</h3>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Value</th><th>Scale</th></tr>
+              <tr><td><code>EXCITEMENT</code></td><td>Major</td></tr>
+              <tr><td><code>FEAR</code></td><td>Minor</td></tr>
+              <tr><td><code>PEACEFUL</code></td><td>Pentatonic</td></tr>
+              <tr><td><code>CHALLENGE</code></td><td>Dorian</td></tr>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h3>GameGenre</h3>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Value</th><th>Character</th></tr>
+              <tr><td><code>ACTION</code></td><td>Energetic</td></tr>
+              <tr><td><code>RPG</code></td><td>Epic</td></tr>
+              <tr><td><code>Horror</code></td><td>Dissonant</td></tr>
+              <tr><td><code>Puzzle</code></td><td>Ambient</td></tr>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h3>GameMood</h3>
+          <div class="table-wrap">
+            <table>
+              <tr><th>Value</th><th>Feel</th></tr>
+              <tr><td><code>JOYFUL</code></td><td>Upbeat and lively</td></tr>
+              <tr><td><code>SERENE</code></td><td>Calm and ambient</td></tr>
+              <tr><td><code>EPIC</code></td><td>Grand and orchestral</td></tr>
+              <tr><td><code>RELAXING</code></td><td>Relaxing</td></tr>
+              <tr><td><code>TENSE</code></td><td>Dark and suspenseful</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="listen">
+        <h2>Hear it for yourself</h2>
+        <p>Listen to a soundtrack BeatCraft generated for a game with a fearful emotion, action genre and tense mood.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://soundcloud.com/omayib/generated-game-sound-with-emational-fear-action-and-tense">▶ Listen on SoundCloud</a>
+          <a class="btn ghost" href="https://github.com/omayib/BeatCraft/wiki">Read the Wiki</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>BeatCraft · MIT License</span>
+      <span>Questions? Contact Arif Akbarul Huda at <a href="mailto:omayib@gmail.com">omayib@gmail.com</a></span>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.copy').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        navigator.clipboard.writeText(btn.dataset.copy).then(function () {
+          btn.textContent = 'Copied!';
+          setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
